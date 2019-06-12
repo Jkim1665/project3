@@ -1,0 +1,22 @@
+    
+{
+    "development": {
+      "username": "root",
+      "password": "Codepass7",
+      "database": "project3db",
+      "host": "localhost",
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": "root",
+      "password": "farmboy1",
+      "database": "testdb",
+      "host": "localhost",
+      "dialect": "mysql",
+      "logging": false
+    },
+    "production": {
+      "use_env_variable": "JAWSDB_URL",
+      "dialect": "mysql"
+    }
+  } 
