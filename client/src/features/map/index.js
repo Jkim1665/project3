@@ -56,8 +56,8 @@ function Map(props) {
             position: 'relative',
             top: '0px',
             left: '0px',
-            width: '800px',
-            height: '480px',
+            width: '1600px',
+            height: '800px',
             border: '4px solid white',
         }}
         >
