@@ -1,7 +1,9 @@
 import React from "react";
 import store from '../../config/store'
 import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from '../../config/constants'
+import ReactDOM from 'react-dom'
 import App from "../../App";
+import Modal from "../components/ModalTest";
 
 
 export default function handleMovement(player) {
@@ -67,7 +69,7 @@ export default function handleMovement(player) {
   }
 
   //run message for tile=4
-  function dispatchMoveWithFunc(direction, newPos, cb) {
+  function dispatchMoveWithFunc(direction, newPos) {
 
     const walkIndex = getWalkIndex();
 
@@ -82,41 +84,24 @@ export default function handleMovement(player) {
     });
 
     //function to run message
-    cb(message);
+    message();
   }
 
   function message() {
 
-    return (
-      
-    )
-      // return (
-      //   <div>
-      //     <div id="messageModal"
-      //       style={{
-      //         display: "block",
-      //         position: "fixed",
-      //         paddingTop: "100px",
-      //         zIndex: "1",
-      //         left: "0",
-      //         top: "0",
-      //         width: "100%",
-      //         height: "100%",
-      //         overflow: "auto",
-      //         backgroundColor: "rgb(0,0,0,0.4)"
-      //       }}
-      //     >
-      
-      //       <div class="modal-content">
-      //         <span class="close">&times;</span>
-      //         <p>Some text in the Modal..</p>
-      //       </div>
-  
-      //     </div>
-      //   </div>
-      // )
-      
+
+    
+ 
+    ReactDOM.render(<Modal/>, document.getElementById('modal'));
+
+
   }
+
+ 
+ 
+
+
+
 
 
   //takes a position and dispatches our action into the store with a payload of the new position
