@@ -1,18 +1,20 @@
-
 const initialState = {
-    position: [0, 0],
+  position: [0, 0],
+  spriteLocation: "0px 0px",
+  direction: "EAST",
+  walkIndex: 0,
 }
 
 const playerReducer = (state=initialState, action) => {
-    switch(action.type) {
-        case "MOVE_PLAYER":
-            return {
-                //return a new js object and use spread to spread out action.payload
-                ...action.payload
-            }
-        default: 
-            return state
-    }
+  switch(action.type) {
+    case 'MOVE_PLAYER':
+      return {
+        // ... is the spread function
+        ...action.payload
+      }
+    default:
+      return state
+  }
 }
 
-export default playerReducer;
+export default playerReducer

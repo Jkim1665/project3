@@ -1,57 +1,177 @@
-import store from "../../config/store";
-import { SPRITE_SIZE } from "../../config/constants";
+import React from "react";
+import store from '../../config/store'
+import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from '../../config/constants'
+import App from "../../App";
+
 
 export default function handleMovement(player) {
 
-    function getNewPosition(direction) {
-        
-        const oldPos = store.getState().player.position
-
-        switch(direction) {
-            case "west":
-                return [ oldPos[0]-SPRITE_SIZE, oldPos[1] ]
-            case "east":
-                return [ oldPos[0]+SPRITE_SIZE, oldPos[1] ]
-            case "north":
-                return [ oldPos[0], oldPos[1]-SPRITE_SIZE ]
-            case "south":
-                return [ oldPos[0], oldPos[1]+SPRITE_SIZE ]
-        }
-        
+  function getNewPosition(oldPos, direction) {
+    switch(direction) {
+      case 'WEST':
+        return [ oldPos[0]-SPRITE_SIZE, oldPos[1] ]
+      case 'EAST':
+        return [ oldPos[0]+SPRITE_SIZE, oldPos[1] ]
+      case 'NORTH':
+        return [ oldPos[0], oldPos[1]-SPRITE_SIZE ]
+      case 'SOUTH':
+        return [ oldPos[0], oldPos[1]+SPRITE_SIZE ]
     }
+  }
 
-    function directionMove(direction) {
-
-        store.dispatch({
-            type: "MOVE_PLAYER",
-            payload: {
-                position: getNewPosition(direction)
-            }
-        })
+  function getSpriteLocation(direction, walkIndex) {
+    switch(direction) {
+      case "SOUTH":
+          return `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*0}px`
+      case "EAST":
+          return `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*1}px`
+      case "WEST":
+          return `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*2}px`
+      case "NORTH":
+          return `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*3}px`
     }
-    
-    function handleKeyDown(e) {
+  }
 
-        e.preventDefault();
+  //this controls sprite images being displayed on the DOM
+  function getWalkIndex() {
+    const walkIndex = store.getState().player.walkIndex
+    return walkIndex >= 7 ? 0 : walkIndex + 1
+  }
 
-        switch(e.keyCode) {
-            case 37:
-                return directionMove("west")
-            case 38:
-                return directionMove("north")
-            case 39:
-                return directionMove("east")
-            case 40:
-                return directionMove("south")
+  //can't walk off the map
+  function observeBoundaries(oldPos, newPos) {
+    return (newPos[0] >= 0 && newPos[0] <= MAP_WIDTH - SPRITE_SIZE) &&
+           (newPos[1] >= 0 && newPos[1] <= MAP_HEIGHT - SPRITE_SIZE)
+  }
 
-            default: 
-                console.log(e.keyCode)
-        }
-    }
+  //can't walk over objects
+  function observeImpassable(oldPos, newPos) {
 
-    window.addEventListener("keydown", (e) => {
-        handleKeyDown(e)
+    const tiles = store.getState().map.tiles
+    const y = newPos[1] / SPRITE_SIZE
+    const x = newPos[0] / SPRITE_SIZE
+    const nextTile = tiles[y][x]
+    return nextTile < 5
+  
+  }
+
+  //game functions to return if tile is 4
+  function gameFunc(oldPos, newPos) {
+
+    const tiles = store.getState().map.tiles
+    const y = newPos[1] / SPRITE_SIZE
+    const x = newPos[0] / SPRITE_SIZE
+    const nextTile = tiles[y][x]
+    return nextTile === 4;
+  
+  }
+
+  //run message for tile=4
+  function dispatchMoveWithFunc(direction, newPos, cb) {
+
+    const walkIndex = getWalkIndex();
+
+    store.dispatch({
+      type: 'MOVE_PLAYER',
+      payload: {
+        position: newPos,
+        direction,
+        walkIndex,
+        spriteLocation: getSpriteLocation(direction, walkIndex),
+      }
+    });
+
+    //function to run message
+    cb(message);
+  }
+
+  function message() {
+
+    return (
+      
+    )
+      // return (
+      //   <div>
+      //     <div id="messageModal"
+      //       style={{
+      //         display: "block",
+      //         position: "fixed",
+      //         paddingTop: "100px",
+      //         zIndex: "1",
+      //         left: "0",
+      //         top: "0",
+      //         width: "100%",
+      //         height: "100%",
+      //         overflow: "auto",
+      //         backgroundColor: "rgb(0,0,0,0.4)"
+      //       }}
+      //     >
+      
+      //       <div class="modal-content">
+      //         <span class="close">&times;</span>
+      //         <p>Some text in the Modal..</p>
+      //       </div>
+  
+      //     </div>
+      //   </div>
+      // )
+      
+  }
+
+
+  //takes a position and dispatches our action into the store with a payload of the new position
+  function dispatchMove(direction, newPos) {
+
+    const walkIndex = getWalkIndex();
+
+    store.dispatch({
+      type: 'MOVE_PLAYER',
+      payload: {
+        position: newPos,
+        direction,
+        walkIndex,
+        spriteLocation: getSpriteLocation(direction, walkIndex),
+      }
     })
+  }
 
-    return player;
+  function attemptMove(direction) {
+    const oldPos = store.getState().player.position
+    const newPos = getNewPosition(oldPos, direction)
+
+    if(observeBoundaries(oldPos, newPos) && observeImpassable(oldPos, newPos) && gameFunc(oldPos, newPos)) {
+      dispatchMoveWithFunc(direction, newPos, message);
+    }
+    if(observeBoundaries(oldPos, newPos) && observeImpassable(oldPos, newPos)) {
+      dispatchMove(direction, newPos);
+    }
+      
+  }
+
+  function handleKeyDown(e) {
+    e.preventDefault()
+
+    switch(e.keyCode) {
+      case 37:
+        return attemptMove('WEST')
+
+      case 38:
+        return attemptMove('NORTH')
+
+      case 39:
+        return attemptMove('EAST')
+
+      case 40:
+        return attemptMove('SOUTH')
+
+      default:
+        console.log(e.keyCode)
+    }
+  }
+
+  window.addEventListener('keydown', (e) => {
+    handleKeyDown(e)
+  })
+
+  return player
 }
