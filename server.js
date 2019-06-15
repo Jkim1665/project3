@@ -2,10 +2,11 @@ const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
-
+const routes = require("./routes")
 const db = require("./models");
+const passport = require("./config/passport");
 
-// Define middleware here
+app.use(express.bodyParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Serve up static assets (usually on heroku)
@@ -21,8 +22,7 @@ app.use(passport.session());
 
 
 // Define API routes here
-
-
+app.use(routes);
 
 
 
@@ -33,9 +33,8 @@ app.get("*", (req, res) => {
 });
 
 
-db.sequelize.sync().then(function() {
-
-app.listen(PORT, () => {
-  console.log(`🌎 ==> API server now on port ${PORT}!`);
-});
+db.sequelize.sync().then(function () {
+  app.listen(PORT, () => {
+    console.log(`🌎 ==> API server now on port ${PORT}!`);
+  });
 });

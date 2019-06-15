@@ -2,7 +2,7 @@
 {
     "development": {
       "username": "root",
-      "password": "Codepass7",
+      "password": "root",
       "database": "project3db",
       "host": "localhost",
       "dialect": "mysql"
