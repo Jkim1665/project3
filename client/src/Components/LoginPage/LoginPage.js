@@ -16,19 +16,27 @@ class LoginPage extends React.Component {
 
         event.preventDefault();
         this.props.onSubmit(this.state.name, this.state.email, this.state.password);
-        
+
         API.createUser({
             name: this.state.name,
             email: this.state.email,
             password: this.state.password
         })
         .then(function(data) {
+            console.log("LoginPage.js db data:")
             console.log(data);
         })
         .catch(function(err) {
             console.log(err);
-        })
-
+        });
+        // v ---- TESTING ---- v
+        // API.findUsers()
+        //     .then(function (data) {
+        //         console.log(data);
+        //     })
+        //     .catch(function (err) {
+        //         console.log(err);
+        //     });
     }
 
     render() {
@@ -38,8 +46,8 @@ class LoginPage extends React.Component {
 
 
                 Welcome to the dungeon
-          
-          
+
+
       <hr />
                 <form onSubmit={this.onFormSubmit} >
 

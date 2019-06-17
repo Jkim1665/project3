@@ -8,9 +8,9 @@ import LoginPage from "./Components/LoginPage";
 class App extends Component {
 
 
-  onSearchSubmit(name,email,password) {
-    console.log(name,email,password)
-}
+  onSearchSubmit(name, email, password) {
+    console.log(name, email, password)
+  }
 
 
 
@@ -18,11 +18,11 @@ class App extends Component {
 
   render() {
     return (
-      <LoginPage onSubmit = {this.onSearchSubmit}>
-      <BackgroundDungeon/>
-          </LoginPage>
-    
-   
+      <LoginPage onSubmit={this.onSearchSubmit}>
+        <BackgroundDungeon />
+      </LoginPage>
+
+
     );
   }
 }
