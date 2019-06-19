@@ -1,9 +1,5 @@
-import React from "react";
-import store from '../../config/store'
+import store from '../../config/store';
 import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from '../../config/constants'
-import ReactDOM from 'react-dom'
-import App from "../../App";
-import Modal from "../components/ModalTest";
 
 
 export default function handleMovement(player) {
@@ -57,53 +53,6 @@ export default function handleMovement(player) {
   
   }
 
-  //game functions to return if tile is 4
-  function gameFunc(oldPos, newPos) {
-
-    const tiles = store.getState().map.tiles
-    const y = newPos[1] / SPRITE_SIZE
-    const x = newPos[0] / SPRITE_SIZE
-    const nextTile = tiles[y][x]
-    return nextTile === 4;
-  
-  }
-
-  //run message for tile=4
-  function dispatchMoveWithFunc(direction, newPos) {
-
-    const walkIndex = getWalkIndex();
-
-    store.dispatch({
-      type: 'MOVE_PLAYER',
-      payload: {
-        position: newPos,
-        direction,
-        walkIndex,
-        spriteLocation: getSpriteLocation(direction, walkIndex),
-      }
-    });
-
-    //function to run message
-    message();
-  }
-
-  function message() {
-
-
-    
- 
-    ReactDOM.render(<Modal/>, document.getElementById('modal'));
-
-
-  }
-
- 
- 
-
-
-
-
-
   //takes a position and dispatches our action into the store with a payload of the new position
   function dispatchMove(direction, newPos) {
 
@@ -124,9 +73,6 @@ export default function handleMovement(player) {
     const oldPos = store.getState().player.position
     const newPos = getNewPosition(oldPos, direction)
 
-    if(observeBoundaries(oldPos, newPos) && observeImpassable(oldPos, newPos) && gameFunc(oldPos, newPos)) {
-      dispatchMoveWithFunc(direction, newPos, message);
-    }
     if(observeBoundaries(oldPos, newPos) && observeImpassable(oldPos, newPos)) {
       dispatchMove(direction, newPos);
     }

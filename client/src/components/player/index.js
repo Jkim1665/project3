@@ -19,12 +19,12 @@ function Player(props) {
   )
 }
 
-//map the redux state with the key of player
+//This function will grab all the player properties as an object and returns that object into the function
 function mapStateToProps(state) {
   return {
     ...state.player,
   }
 }
 
-//this connects our player function to the react datastore
+//this connects our player component to the react store
 export default connect(mapStateToProps)(handleMovement(Player))
