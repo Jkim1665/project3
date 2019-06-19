@@ -5,18 +5,22 @@ import Coins from "../Coins";
 import './styles.css'
 import store from '../../config/store';
 import Modal from "react-modal";
+import bgImage from './testmapnew.png';
+import Level from "../Level"
 
 //this function gets the tile file to put into the background of that tile
 function getTileSprite(type) {
   switch(type) {
     case 0:
         return 'grass'
-    case 3:
+    case 2:
         return 'tree'
+    case 3:
+        return 'brick'
     case 4:
         return "chest"
     case 5:
-        return 'rock'
+        return 'grass'
     case 6:
         return 'tree'
     case 7:
@@ -50,16 +54,16 @@ function MapRow(props) {
 }
 
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
+// const customStyles = {
+//   content : {
+//     top                   : '50%',
+//     left                  : '50%',
+//     right                 : 'auto',
+//     bottom                : 'auto',
+//     marginRight           : '-50%',
+//     transform             : 'translate(-50%, -50%)'
+//   }
+// };
 
 
 class Map extends React.Component {
@@ -68,14 +72,30 @@ class Map extends React.Component {
     coin: 0,
     modalOneIsOpen: false,
     modalTwoIsOpen: false,
-    modalThreeIsOpen: false
+    modalThreeIsOpen: false,
+    modalFourIsOpen: false,
+    openingModal: false,
+    level: 0
   }
 
   // this will grab the player's location each time a key is pressed
   componentDidMount() {
+    this.openingModalFunc();
     document.addEventListener("keyup", this.handleKeyPress);
   }
+
+  /******game opening modal for directions to the game */
+  openingModalFunc = () => {
+      this.setState({openingModal: true});
+  }
+  closeModalFunc = () => {
+      this.setState({openingModal: false});
+  }
+  /******** game opening modal  */
   
+  
+
+
   //funtion for deciding what to do when Jack lands on a specific position
   handleKeyPress = () => {
 
@@ -85,15 +105,15 @@ class Map extends React.Component {
     const y = position[1];
 
     //if player lands on position with these coordinates, run modal questions
-    if (x === 160 && y === 160) {
+    if (x === 64 && y === 64) {
       this.openModal()
     }
     //upgrade Jack
-    if (x === 1280 && y === 720) {
+    if (x === 1408 && y === 704) {
       this.upgradeJack()
     }
     //final interview
-    if (x === 80 && y === 640) {
+    if (x === 640 && y === 640) {
       this.finalInterview()
     }
   }
@@ -114,10 +134,10 @@ class Map extends React.Component {
     this.setState({modalOneIsOpen: true});
   }
 
-  afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#f00';
-  }
+  // afterOpenModal = () => {
+  //   // references are now sync'd and can be accessed.
+  //   this.subtitle.style.color = '#f00';
+  // }
 
   closeModal = () => {
     this.setState({modalOneIsOpen: false});
@@ -125,15 +145,22 @@ class Map extends React.Component {
   /********** Practice Questions Modal ********/
 
 
+
+
+
   /********** Upgrade Jack ********/
   upgradeJack = () => {
 
-    console.log("upgraded Jack")
-
     if (this.state.coin >= 5) {
-      let newCoins = this.state.coin - 5
+
+      let newCoins = this.state.coin - 5;
+      let newLevel = this.state.level + 1;
+
+      alert("upgraded Jack");
+
       this.setState({
-        coin: newCoins
+        coin: newCoins,
+        level: newLevel
       })
     } else {
       alert("Insufficient Coins");
@@ -145,9 +172,17 @@ class Map extends React.Component {
 
 
 
+
+
+
   /********** Final Interview ********/
   finalInterview = () => {
-    console.log("Final Interview")
+    
+    if (this.state.level === 3) {
+      alert("Final Interview, Congratulations!")
+    } else {
+      alert("You are not ready yet.");
+    }
   }
   /********** Final Interview ********/
 
@@ -157,17 +192,48 @@ class Map extends React.Component {
   render() {
     return (
         <>
+        
           <div
           style={{
               position: 'relative',
               top: '0px',
               left: '0px',
               width: '1600px',
-              height: '800px',
-              border: '4px solid white'
+              height: '768px',
+              border: '4px solid white',
+              backgroundImage: `url('${bgImage}')`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover"
           }}
           >
-          
+            
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.openingModal}
+            onRequestClose={this.closeModalFunc}
+            className="Modal"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
+          >
+
+            <h2 ref={subtitle => this.subtitle = subtitle}>Welcome to JACK!</h2>
+            <div style={{
+              padding: "0px 150px"
+            }}>
+              <p>The purpose of this game is to help Jack get a full stack developer position at Google.</p>
+              <p>
+              To do this, Jack has to go to the each of the three trainers (Steven, Will, Guillermo), and he must answer trivia questions. 
+              Jack will gain a coin for each trivia question he answers correctly.
+              When Jack gains 5 coins, he can go to the shop to upgrade his look (which is how he levels up).
+              Once Jack has reached level 3, he can go to the interviewer at Google (Alex) and try to land that awesome job at Google!</p>
+              </div>
+            <form>
+              <button  type="button" onClick={this.closeModalFunc}>Got it</button>
+            </form>
+          </Modal>
+
+
+
           <Modal
             ariaHideApp={false}
             isOpen={this.state.modalOneIsOpen}
@@ -228,7 +294,20 @@ class Map extends React.Component {
             </form>
           </Modal>
 
-          <Coins coin={this.state.coin}/>
+          <div style={{
+            position: "absolute",
+            width: "226px",
+            height: "50px",
+            left: "1370px",
+            top: "-4px",
+            backgroundColor: "#999999",
+            border: "solid 4px #ffffff"
+
+          }}>
+              <Coins coin={this.state.coin}/>
+              <Level level={this.state.level}/>
+          </div>
+
     
           {
               this.props.tiles.map( row => <MapRow tiles={row} /> )

@@ -1,22 +1,26 @@
 .tile {
   display: inline-flex;
-  background-color: #42b842;
+  
 }
 
 .grass {
  
 }
 
-.rock {
-  background-image: url('/tiles/rock.png');
+.brick {
+  background-image: url('/tiles/newbrick.png');
 }
 
 .tree {
   background-image: url('/tiles/tree.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .chest {
   background-image: url('/tiles/chest.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .player {
@@ -63,4 +67,14 @@ button {
   margin: 10px;
   font-size: 25px;
   cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(130, 184, 255);
+  border: 2px solid #ffffff;
+}
+
+button:active {
+  background-color: rgb(130, 255, 136);
+  border: 2px solid #ffffff;
 }

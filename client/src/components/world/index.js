@@ -18,7 +18,7 @@ function World(props) {
         style={{
           position: 'relative',
           width: '1600px',
-          height: '960px',
+          height: '768px',
           margin: '20px auto',
         }}
       >

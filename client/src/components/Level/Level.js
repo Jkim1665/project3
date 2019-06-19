@@ -1,18 +1,18 @@
 import React from "react";
 
-class Coins extends React.Component {
+class Level extends React.Component {
  
   
     render() {
       return (
         <div style={{
             position: "absolute",
-            left: "10px",
+            left: "125px",
             top: "-5px",
-            color: "#FFFF00",
+            color: "#008000",
             fontSize: "12px"
           }}>
-            <h1>Coins: {this.props.coin}</h1>
+            <h1>Level: {this.props.level}</h1>
           </div>
       );
     }
@@ -22,4 +22,4 @@ class Coins extends React.Component {
 
 
 
-export default Coins;
+export default Level;
