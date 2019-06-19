@@ -8,7 +8,6 @@ class Coins extends React.Component {
       return (
         <div style={{
             position: "absolute",
-            zIndex: "1",
             left: "1450px",
             top: "-10px",
             width: "200px",

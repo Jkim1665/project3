@@ -50,11 +50,25 @@ function MapRow(props) {
 }
 
 
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+
 class Map extends React.Component {
 
   state = {
     coin: 0,
-    modalIsOpen: false
+    modalOneIsOpen: false,
+    modalTwoIsOpen: false,
+    modalThreeIsOpen: false
   }
 
   // this will grab the player's location each time a key is pressed
@@ -62,20 +76,25 @@ class Map extends React.Component {
     document.addEventListener("keyup", this.handleKeyPress);
   }
   
-  //need to use the arrow function for "this" to refer to Map.  
-  //if not arrow function "this" will refer to the document
+  //funtion for deciding what to do when Jack lands on a specific position
   handleKeyPress = () => {
 
     //position will be an array of [x,y]  
     let position = store.getState().player.position;
-    
     const x = position[0];
     const y = position[1];
 
-    console.log(position)
-    //if player lands on position with these coordinates, run increaseCoins
+    //if player lands on position with these coordinates, run modal questions
     if (x === 160 && y === 160) {
       this.openModal()
+    }
+    //upgrade Jack
+    if (x === 1280 && y === 720) {
+      this.upgradeJack()
+    }
+    //final interview
+    if (x === 80 && y === 640) {
+      this.finalInterview()
     }
   }
 
@@ -89,9 +108,10 @@ class Map extends React.Component {
     this.closeModal();
   }
 
-  /**********modal functions ********/
+
+  /********** Practice Questions Modal ********/
   openModal = () => {
-    this.setState({modalIsOpen: true});
+    this.setState({modalOneIsOpen: true});
   }
 
   afterOpenModal = () => {
@@ -100,9 +120,39 @@ class Map extends React.Component {
   }
 
   closeModal = () => {
-    this.setState({modalIsOpen: false});
+    this.setState({modalOneIsOpen: false});
   }
-  /**********modal functions ********/
+  /********** Practice Questions Modal ********/
+
+
+  /********** Upgrade Jack ********/
+  upgradeJack = () => {
+
+    console.log("upgraded Jack")
+
+    if (this.state.coin >= 5) {
+      let newCoins = this.state.coin - 5
+      this.setState({
+        coin: newCoins
+      })
+    } else {
+      alert("Insufficient Coins");
+    }
+   
+  }
+
+  /********** Upgrade Jack ********/
+
+
+
+  /********** Final Interview ********/
+  finalInterview = () => {
+    console.log("Final Interview")
+  }
+  /********** Final Interview ********/
+
+
+
 
   render() {
     return (
@@ -117,11 +167,14 @@ class Map extends React.Component {
               border: '4px solid white'
           }}
           >
-            
+          
           <Modal
-            isOpen={this.state.modalIsOpen}
+            ariaHideApp={false}
+            isOpen={this.state.modalOneIsOpen}
             onRequestClose={this.closeModal}
-            contentLabel="Example Modal"
+            className="Modal"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
           >
 
             <h2 ref={subtitle => this.subtitle = subtitle}>Question #1</h2>
@@ -130,8 +183,48 @@ class Map extends React.Component {
               <p>HTML stands for Hypertext Markup Language.</p>
               </div>
             <form>
-              <button type="button" onClick={this.increaseCoins}>Yes</button>
-              <button  type="button" onClick={this.closeModal}>No</button>
+              <button type="button" onClick={this.increaseCoins}>True</button>
+              <button  type="button" onClick={this.closeModal}>False</button>
+            </form>
+          </Modal>
+
+          <Modal
+             ariaHideApp={false}
+             isOpen={this.state.modalTwoIsOpen}
+             onRequestClose={this.closeModal}
+             className="Modal"
+             overlayClassName="Overlay"
+             contentLabel="Modal"
+          >
+
+            <h2 ref={subtitle => this.subtitle = subtitle}>Question #1</h2>
+            <div>
+              <p>True or False</p>
+              <p>HTML stands for Hypertext Markup Language.</p>
+              </div>
+            <form>
+              <button type="button" onClick={this.increaseCoins}>True</button>
+              <button  type="button" onClick={this.closeModal}>False</button>
+            </form>
+          </Modal>
+
+          <Modal
+              ariaHideApp={false}
+              isOpen={this.state.modalThreeIsOpen}
+              onRequestClose={this.closeModal}
+              className="Modal"
+              overlayClassName="OverlayFinal"
+              contentLabel="Modal"
+          >
+
+            <h2 ref={subtitle => this.subtitle = subtitle}>Question #1</h2>
+            <div>
+              <p>True or False</p>
+              <p>HTML stands for Hypertext Markup Language.</p>
+              </div>
+            <form>
+              <button type="button" onClick={this.increaseCoins}>True</button>
+              <button  type="button" onClick={this.closeModal}>False</button>
             </form>
           </Modal>
 

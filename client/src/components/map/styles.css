@@ -24,3 +24,43 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.Modal {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  background-color: rgb(65, 65, 65);
+  text-align: center;
+  color: #ffffff;
+  font-size: 30px;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(130, 184, 255);
+}
+
+.OverlayFinal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(145, 0, 0);
+}
+
+button {
+  width: 120px;
+  height: 50px;
+  background-color: #ffffff;
+  border: 2px solid rgb(130, 184, 255);
+  margin: 10px;
+  font-size: 25px;
+  cursor: pointer;
+}
