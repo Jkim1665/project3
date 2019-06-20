@@ -6,13 +6,18 @@ import './styles.css'
 import store from '../../config/store';
 import Modal from "react-modal";
 import bgImage from './testmapnew.png';
+import bgImage2 from "./testMap.png";
 import Level from "../Level"
+import billboard from "./billboard.png";
+import TriviaOne from "../TriviaOne";
 
 //this function gets the tile file to put into the background of that tile
 function getTileSprite(type) {
   switch(type) {
     case 0:
-        return 'grass'
+        return 'gym'
+    case 1:
+        return 'gym'
     case 2:
         return 'tree'
     case 3:
@@ -22,11 +27,13 @@ function getTileSprite(type) {
     case 5:
         return 'grass'
     case 6:
-        return 'tree'
+        return 'gui'
     case 7:
-        return "chest"
+        return "steven"
     case 8:
         return "player"
+    case 9:
+        return 'will'
   }
 }
 
@@ -75,7 +82,8 @@ class Map extends React.Component {
     modalThreeIsOpen: false,
     modalFourIsOpen: false,
     openingModal: false,
-    level: 0
+    level: 0,
+    onTriviaOne: false,
   }
 
   // this will grab the player's location each time a key is pressed
@@ -101,22 +109,46 @@ class Map extends React.Component {
 
     //position will be an array of [x,y]  
     let position = store.getState().player.position;
+    let direction = store.getState().player.direction;
     const x = position[0];
     const y = position[1];
+    const triviaOpen = this.state.onTriviaOne;
 
+    console.log(direction);
     //if player lands on position with these coordinates, run modal questions
-    if (x === 64 && y === 64) {
+    if (x === 64 && y === 64 && !triviaOpen && direction === "NORTH") {
       this.openModal()
     }
+    if (x === 384 && y === 128 && !triviaOpen && direction === "NORTH") {
+      this.openModal()
+    }
+    if (x === 960 && y === 128 && !triviaOpen && direction === "NORTH") {
+      this.openModal()
+    }
+    //turn off ability to reopen modal while still being on the same tile. must go off tile and come back on.
+    if (!(x === 64 && y === 64) && !(x === 384 && y === 128) && !(x === 960 && y === 128)) {
+      this.setState({
+        onTriviaOne: false,
+      });
+    }
+
+    //bulletin board 
+    if (x === 1280 && y === 128 && direction === "NORTH") {
+      this.openModalFour()
+    }
+
     //upgrade Jack
-    if (x === 1408 && y === 704) {
+    if (x === 1408 && y === 704 && direction === "SOUTH") {
       this.upgradeJack()
     }
     //final interview
-    if (x === 640 && y === 640) {
+    if (x === 640 && y === 640 && direction === "SOUTH") {
       this.finalInterview()
     }
   }
+
+
+
 
   //function to increase coin count
   increaseCoins = () => {
@@ -129,21 +161,37 @@ class Map extends React.Component {
   }
 
 
+  /**********Bulletin Board Modal ********/
+  openModalFour = () => {
+    this.setState({
+      modalFourIsOpen: true,
+    });
+  }
+
+  closeModalFour = () => {
+    this.setState({
+      modalFourIsOpen: false,
+    });
+  }
+  /********** Bulletin Board Modal ********/
+
+
+
+
   /********** Practice Questions Modal ********/
   openModal = () => {
-    this.setState({modalOneIsOpen: true});
+    this.setState({
+      modalOneIsOpen: true,
+    });
   }
-
-  // afterOpenModal = () => {
-  //   // references are now sync'd and can be accessed.
-  //   this.subtitle.style.color = '#f00';
-  // }
 
   closeModal = () => {
-    this.setState({modalOneIsOpen: false});
+    this.setState({
+      modalOneIsOpen: false,
+      onTriviaOne: true,
+    });
   }
   /********** Practice Questions Modal ********/
-
 
 
 
@@ -173,12 +221,10 @@ class Map extends React.Component {
 
 
 
-
-
   /********** Final Interview ********/
   finalInterview = () => {
     
-    if (this.state.level === 3) {
+    if (this.state.level >= 3) {
       alert("Final Interview, Congratulations!")
     } else {
       alert("You are not ready yet.");
@@ -206,6 +252,7 @@ class Map extends React.Component {
               backgroundSize: "cover"
           }}
           >
+          
             
           <Modal
             ariaHideApp={false}
@@ -232,6 +279,38 @@ class Map extends React.Component {
             </form>
           </Modal>
 
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.modalFourIsOpen}
+            onRequestClose={this.closeModalFour}
+            className="Modal"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
+          >
+
+            <div style={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              backgroundImage: `url('${billboard}')`,
+              width: '100%',
+              height: '100%',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover"
+
+            }}>
+   
+              </div>
+            <form>
+              <button type="button" onClick={this.closeModalFour} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
+          </Modal>
 
 
           <Modal
@@ -242,16 +321,9 @@ class Map extends React.Component {
             overlayClassName="Overlay"
             contentLabel="Modal"
           >
+            <TriviaOne increaseCoins={this.increaseCoins}/>
+            <button type="button" onClick={this.closeModal}>Close</button>
 
-            <h2 ref={subtitle => this.subtitle = subtitle}>Question #1</h2>
-            <div>
-              <p>True or False</p>
-              <p>HTML stands for Hypertext Markup Language.</p>
-              </div>
-            <form>
-              <button type="button" onClick={this.increaseCoins}>True</button>
-              <button  type="button" onClick={this.closeModal}>False</button>
-            </form>
           </Modal>
 
           <Modal
@@ -308,10 +380,10 @@ class Map extends React.Component {
               <Level level={this.state.level}/>
           </div>
 
-    
           {
               this.props.tiles.map( row => <MapRow tiles={row} /> )
           }
+          
           </div>
       </>
     )

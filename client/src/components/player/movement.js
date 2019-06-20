@@ -73,8 +73,12 @@ export default function handleMovement(player) {
     const oldPos = store.getState().player.position
     const newPos = getNewPosition(oldPos, direction)
 
+    //if nothing in the way, move to that position and dispatch to storage direction and new position
     if(observeBoundaries(oldPos, newPos) && observeImpassable(oldPos, newPos)) {
       dispatchMove(direction, newPos);
+    } else {
+      //else if not moveable in direction, only send direction character is facing and old(current) position
+      dispatchMove(direction, oldPos);
     }
       
   }

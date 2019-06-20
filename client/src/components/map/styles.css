@@ -3,9 +3,19 @@
   
 }
 
-.grass {
- 
+.will {
+  background-image: url('/tiles/will.png');
 }
+
+.gui {
+  background-image: url('/tiles/gui.png');
+}
+
+
+.steven {
+  background-image: url('/tiles/steven.png');
+}
+
 
 .brick {
   background-image: url('/tiles/newbrick.png');
