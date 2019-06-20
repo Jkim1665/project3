@@ -12,6 +12,7 @@ export default {
   },
   // Creates a user entry in the db
   createUser: function(userData) {
+    console.log(userData);
     return axios.post("/api/user/createUser", userData);
   }
 };

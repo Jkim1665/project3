@@ -2,19 +2,22 @@ const router = require("express").Router();
 const db = require("../../models");
 
 // Matches with "/api/user/createUser"
-// router.route("/createUser")
-//   .post(db.User.create({
-//     name: req.body.name,
-//     email: req.body.email,
-//     password: req.body.password
-//   })
-//     .then(function (data) {
+// router.route("/createUser", function (req, res) {
+
+// })
+//   .post(
+//     db.User.create({
+//       name: req.body.name,
+//       email: req.body.email,
+//       password: req.body.password
+//     }).then(function (data) {
+//       console.log(data);
+//       res.end();
 //       res.json(data);
-//     })
-//     .catch(function (err) {
+//     }).catch(function (err) {
 //       console.log(err);
 //     })
-//   );
+//   )
 
 router.post("/createUser", function (req, res) {
   console.log(req.body);
@@ -24,6 +27,7 @@ router.post("/createUser", function (req, res) {
     password: req.body.password
   })
     .then(function (data) {
+      console.log(data);
       res.json(data);
     })
     .catch(function (err) {
@@ -56,15 +60,14 @@ router.post("/createUser", function (req, res) {
 //       })
 //   });
 
-router.get("/", function (req, res) {
-  db.User.findAll({}).then(function (users) {
-    alert(users);
-    console.log(users);
-    res.json(users);
-  }).catch(function (err) {
-    console.log(err);
-  })
-});
+// router.get("/", function (req, res) {
+//   db.User.findAll({}).then(function (users) {
+//     alert(users);
+//     console.log(users);
+//     res.json(users);
+//   }).catch(function (err) {
+//     console.log(err);
+//   })
+// });
 
 module.exports = router;
-

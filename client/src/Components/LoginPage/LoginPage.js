@@ -2,7 +2,6 @@ import React from "react";
 import "./LoginPage.css";
 import API from "../../utils/API";
 
-
 class LoginPage extends React.Component {
 
     state = {
