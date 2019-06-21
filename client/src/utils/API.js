@@ -1,0 +1,19 @@
+import axios from "axios";
+
+export default {
+  // Gets all the users from db (for testing)
+  findUsers: function () {
+    return axios.get("/api/users");
+  },
+
+  // Gets a single user from db
+  findUser: function (userData) {
+    return axios.post("/api/user/findUser", userData);
+  },
+  
+  // Creates a user entry in the db
+  createUser: function (userData) {
+    console.log(userData);
+    return axios.post("/api/user/createUser", userData);
+  }
+};

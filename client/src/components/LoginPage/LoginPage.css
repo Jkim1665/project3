@@ -1,0 +1,10 @@
+body {
+  background-image: url("https://i.imgur.com/p78YTHe.png");
+  background-size: cover;
+  height: 100vh;
+}
+  
+form {
+  text-align: center;
+  z-index: 5;
+}
