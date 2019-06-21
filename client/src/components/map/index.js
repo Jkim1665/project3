@@ -119,6 +119,9 @@ class Map extends React.Component {
     if (x === 64 && y === 64 && !triviaOpen && direction === "NORTH") {
       this.openModal()
     }
+    if (x === 512 && y === 320 && !triviaOpen && direction === "NORTH") {
+      this.openModal()
+    }
     if (x === 384 && y === 128 && !triviaOpen && direction === "NORTH") {
       this.openModal()
     }
@@ -146,7 +149,6 @@ class Map extends React.Component {
       this.finalInterview()
     }
   }
-
 
 
 

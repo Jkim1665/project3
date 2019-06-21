@@ -39,7 +39,6 @@ class TriviaOne extends React.Component {
         const arrNum = Math.floor(Math.random() * 10);
 
 
-
         this.setState({
             question: questions[arrNum].q,
             answerOne: questions[arrNum].a1,
