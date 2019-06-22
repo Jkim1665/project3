@@ -7,7 +7,7 @@ import Coins from "../Coins";
 import './styles.css'
 import store from '../../config/store';
 import Modal from "react-modal";
-import bgImage from './testmapnew.png';
+import bgImage1 from './testmapnew.png';
 import bgImage2 from "./testMap.png";
 import Level from "../Level"
 import billboard from "./billboard.png";
@@ -17,9 +17,9 @@ import TriviaOne from "../TriviaOne";
 function getTileSprite(type) {
   switch(type) {
     case 0:
-        return 'gym'
+        return 'grass'
     case 1:
-        return 'gym'
+        return 'grass'
     case 2:
         return 'tree'
     case 3:
@@ -283,7 +283,7 @@ class Map extends React.Component {
               width: '1600px',
               height: '768px',
               border: '4px solid white',
-              backgroundImage: `url('${bgImage}')`,
+              backgroundImage: `url('${this.props.bgImage}')`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover"
           }}
@@ -444,7 +444,8 @@ const mapStateToProps = state => {
     tiles: state.map.tiles,
     //this you can use by using "this.props.tiles"
     coin: state.coin.coin,
-    level: state.level.level
+    level: state.level.level,
+    bgImage: state.map.bgImage
   }
 }
 
