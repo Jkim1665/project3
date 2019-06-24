@@ -3,32 +3,11 @@
   
 }
 
-.will {
-  background-image: url('/tiles/will.png');
+.blank {
+
 }
 
 
-
-.steven {
-  background-image: url('/tiles/steven.png');
-}
-
-
-.brick {
-  background-image: url('/tiles/newbrick.png');
-}
-
-.tree {
-  background-image: url('/tiles/tree.png');
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.chest {
-  background-image: url('/tiles/chest.png');
-  background-position: center;
-  background-repeat: no-repeat;
-}
 
 .player {
   background-image: url('/tiles/player.png');

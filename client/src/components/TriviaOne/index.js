@@ -5,12 +5,24 @@ import { connect } from 'react-redux';
 class TriviaOne extends React.Component {
 
     state ={
-        question: "CSS stands for Creating Style Sheets",
+        questions: [
+            {q: "The answer is answerOne?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerOne"},
+            {q: "The answer is answerTwo?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerTwo"},
+            {q: "The answer is answerThree?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerThree"},
+            {q: "The answer is answerFour?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerFour"},
+            {q: "The answer is answerFive?", a1: "answerFive", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerFive"},
+            {q: "The answer is answerSix?", a1: "answerOne", a2: "answerSix", a3: "answerThree", a4: "answerFour", c: "answerSix"},
+            {q: "The answer is answerSeven?", a1: "answerOne", a2: "answerTwo", a3: "answerSeven", a4: "answerFour", c: "answerSeven"},
+            {q: "The answer is answerEight?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerEight", c: "answerEight"},
+        ],
+        question: "",
         answerOne: "",
         answerTwo: "",
         answerThree: "",
         answerFour: "",
         correctAnswer: "",
+        questionIndex: 0,
+        questionNum: "",
     }
 
     componentDidMount() {
@@ -34,7 +46,7 @@ class TriviaOne extends React.Component {
     }
 
     answeredQuestion = (answer) => {
-
+       
         console.log(answer.target.value);
         if (answer.target.value === this.state.correctAnswer) {
             this.increaseCoins();
@@ -44,30 +56,36 @@ class TriviaOne extends React.Component {
      
     }
 
-    //array of all the questions
+    //set state to next question
     questionsOne = () => {
 
-        const questions = [
+        const questIndex = this.state.questionIndex + 1;
 
-            {q: "The answer is answerOne ?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerOne", im: "forrest.jpg"},
-            {q: "The answer is answerTwo?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerTwo", im: "agnes.gif"},
-            {q: "The answer is answerThree?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerThree", im: "carlton.gif"},
-            {q: "The answer is answerFour?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerFour", im: "scar.gif"},
+        if (this.state.questionIndex < this.state.questions.length) {
+            const questions = this.state.questions[this.state.questionIndex];
 
-        ];
-
-        const arrNum = Math.floor(Math.random() * 4);
-
-        this.setState({
-            question: questions[arrNum].q,
-            answerOne: questions[arrNum].a1,
-            answerTwo: questions[arrNum].a2,
-            answerThree: questions[arrNum].a3,
-            answerFour: questions[arrNum].a4,
-            correctAnswer: questions[arrNum].c
-        })
-
-        console.log(questions[arrNum].q);
+            this.setState({
+                question: questions.q,
+                answerOne: questions.a1,
+                answerTwo: questions.a2,
+                answerThree: questions.a3,
+                answerFour: questions.a4,
+                correctAnswer: questions.c,
+                questionNum: "Question #" + questIndex,
+                questionIndex: questIndex,
+            });
+        } else {
+            this.setState({
+                question: "You have completed this set of questions.",
+                questionNum: "",
+                answerOne: "",
+                answerTwo: "",
+                answerThree: "",
+                answerFour: "",
+                correctAnswer: "",
+                questionIndex: 0,
+            })
+        }
     }
   
 
@@ -77,9 +95,8 @@ class TriviaOne extends React.Component {
         return (
             <>
                 <div>
-                    <h2>Question #1</h2>
+                    <h2>{this.state.questionNum}</h2>
                     <div>
-                        <p>True or False</p>
                         <p>{this.state.question}</p>
                     </div>
                     <form>
