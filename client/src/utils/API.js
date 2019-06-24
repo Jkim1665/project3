@@ -1,19 +1,25 @@
 import axios from "axios";
 
 export default {
-  // Gets all the users from db (for testing)
-  findUsers: function () {
+  // Gets all the users from db
+  // FOR TESTING ONLY
+  findAllUsers: function () {
     return axios.get("/api/users");
   },
 
   // Gets a single user from db
-  findUser: function (userData) {
-    return axios.post("/api/user/findUser", userData);
+  getSingleUser: function (userData) {
+    return axios.post("/api/users/existingUser", userData);
   },
   
-  // Creates a user entry in the db
+  // Updates a single user from db
+  updateSingleUser: function (userData) {
+    return axios.put("/api/users/existingUser", userData);
+  },
+  
+  // Creates a new user entry in the db
   createUser: function (userData) {
     console.log(userData);
-    return axios.post("/api/user/createUser", userData);
+    return axios.post("/api/users/newUser", userData);
   }
 };

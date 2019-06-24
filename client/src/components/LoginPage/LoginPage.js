@@ -10,29 +10,40 @@ class LoginPage extends React.Component {
     password: ""
   }
 
-
   onFormSubmit = (event) => {
     event.preventDefault();
     this.props.onSubmit(this.state.name, this.state.email, this.state.password)
 
-    API.findUsers()
-      .then(res =>
-        console.log(res.data)
-      )
+    API.findAllUsers()
+      .then(res => console.log(res.data))
       .catch(err => console.log(err));
+  }
 
-    // API.createUser({
-    //   name: this.state.name,
-    //   email: this.state.email,
-    //   password: this.state.password
-    // })
-    //   .then(function (data) {
-    //     console.log("LoginPage.js db data:")
-    //     console.log(data);
-    //   })
-    //   .catch(function (err) {
-    //     console.log(err);
-    //   });
+  getSingleUser = (event) => {
+    event.preventDefault();
+    this.props.onSubmit(this.state.name, this.state.email, this.state.password)
+  
+    API.getSingleUser({email: this.state.email.toLowerCase()})
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err));
+  }
+
+  updateSingleUser = (event) => {
+    event.preventDefault();
+    this.props.onSubmit(this.state.name, this.state.email, this.state.password)
+  
+    API.updateSingleUser(this.state)
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err));
+  }
+
+  createUser = (event) => {
+    event.preventDefault();
+    this.props.onSubmit(this.state.name, this.state.email, this.state.password)
+  
+    API.createUser(this.state)
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err));
   }
 
   render() {
@@ -46,17 +57,20 @@ class LoginPage extends React.Component {
         <form onSubmit={this.onFormSubmit} >
 
           <div className="uk-margin">
-            <input className="uk-input uk-form-width-medium" type="text" placeholder="Name" value={this.state.name} onChange={(e) => this.setState({ name: e.target.value.toUpperCase() })} />
+            <input className="uk-input uk-form-width-medium" type="text" placeholder="Name" value={this.state.name.toUpperCase()} onChange={(e) => this.setState({ name: e.target.value.toLowerCase() })} />
           </div>
 
           <div className="uk-margin">
-            <input className="uk-input uk-form-width-medium" type="email" placeholder="Email" value={this.state.email} onChange={(e) => this.setState({ email: e.target.value.toUpperCase() })} />
+            <input className="uk-input uk-form-width-medium" type="email" placeholder="Email" value={this.state.email.toUpperCase()} onChange={(e) => this.setState({ email: e.target.value.toLowerCase() })} />
           </div>
 
           <div className="uk-margin">
             <input className="uk-input uk-form-width-medium" type="password" placeholder="Password" value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} />
           </div>
-          <button type="submit" className="uk-button uk-button-secondary uk-button-large">Large button</button>
+          <button type="submit" className="uk-button uk-button-secondary uk-button-large">findAllUsers</button>
+          <button className="uk-button uk-button-secondary uk-button-large" onClick={this.getSingleUser}>getSingleUser</button>
+          <button className="uk-button uk-button-secondary uk-button-large" onClick={this.updateSingleUser}>updateSingleUser</button>
+          <button className="uk-button uk-button-secondary uk-button-large" onClick={this.createUser}>createUser</button>
         </form>
       </div>
     )

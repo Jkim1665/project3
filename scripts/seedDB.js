@@ -11,7 +11,7 @@ mongoose.connect(
 const Users = [
   {
     name: "Kevin",
-    email: "Kevin@gmail.com",
+    email: "kevin@gmail.com",
     password: "kevinpw"
   }
 ];
