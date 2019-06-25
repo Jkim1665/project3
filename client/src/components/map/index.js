@@ -1,39 +1,35 @@
 import React from 'react';
+//connect is a function that returns a higher order component 
+//that is used on the component
 import { connect } from 'react-redux';
 import { SPRITE_SIZE } from '../../config/constants';
 import Coins from "../Coins";
 import './styles.css'
 import store from '../../config/store';
 import Modal from "react-modal";
-import bgImage from './testmapnew.png';
-import bgImage2 from "./testMap.png";
 import Level from "../Level"
 import billboard from "./billboard.png";
 import TriviaOne from "../TriviaOne";
+import TriviaTwo from "../TriviaTwo";
+import TriviaThree from "../TriviaThree";
+import FinalBoss from "../FinalBoss";
+import treeModal from "./treeModal.png";
+import bush from "./bushextra.png";
+import whiteMark from "./whiteMark.png";
+import deckModal from "./deckModal.png";
+import oceanModal from "./oceanModal.png";
 
 //this function gets the tile file to put into the background of that tile
 function getTileSprite(type) {
   switch(type) {
     case 0:
-        return 'gym'
+        return 'blank'
     case 1:
-        return 'gym'
-    case 2:
-        return 'tree'
-    case 3:
-        return 'brick'
-    case 4:
-        return "chest"
+        return 'blank'
     case 5:
-        return 'grass'
+        return 'blank'
     case 6:
-        return 'gui'
-    case 7:
-        return "steven"
-    case 8:
-        return "player"
-    case 9:
-        return 'will'
+        return 'blank'
   }
 }
 
@@ -61,174 +57,297 @@ function MapRow(props) {
 }
 
 
-// const customStyles = {
-//   content : {
-//     top                   : '50%',
-//     left                  : '50%',
-//     right                 : 'auto',
-//     bottom                : 'auto',
-//     marginRight           : '-50%',
-//     transform             : 'translate(-50%, -50%)'
-//   }
-// };
-
-
 class Map extends React.Component {
 
   state = {
-    coin: 0,
-    modalOneIsOpen: false,
-    modalTwoIsOpen: false,
-    modalThreeIsOpen: false,
-    modalFourIsOpen: false,
-    openingModal: false,
-    level: 0,
-    onTriviaOne: false,
+    saveGameModal: false,
+    openMailModal: false,
+    taOneModal: false,
+    taTwoModal: false,
+    taThreeModal: false,
+    InformationOneModal: false,
+    InformationTwoModal: false,
+    InformationThreeModal: false,
+    InformationFourModal: false,
+    InformationFiveModal: false,
+    modalJackisOpen: false,
+    jackUpgradePossible: "",
+    modalFinalisOpen: false,
+    modalFinalNotReady: false,
+    openNowModal: false,
+    name: "Jack",
+    showOne: true,
+    showTwo: true,   
+    showThree: true,
   }
 
+  
   // this will grab the player's location each time a key is pressed
   componentDidMount() {
-    this.openingModalFunc();
-    document.addEventListener("keyup", this.handleKeyPress);
+    document.addEventListener("keyup", (e) => {
+      this.handleKeyPress(e)
+    });
+    this.openNow()
   }
 
-  /******game opening modal for directions to the game */
-  openingModalFunc = () => {
-      this.setState({openingModal: true});
+  /******** Opening game modal  *************/
+  openNow = () => {
+    this.setState({openNowModal: true});
   }
-  closeModalFunc = () => {
-      this.setState({openingModal: false});
+  closeOpenNow = () => {
+    this.setState({openNowModal: false});
   }
-  /******** game opening modal  */
+  /******** Opening game modal  *************/
   
-  
+  //code for exclamation marks
+  toggleExclamation = () => {
 
+    if (this.state.showOne && this.state.InformationOneModal) {
+      const showOne = this.state.showOne;
+      this.setState({ showOne: !showOne })
+    }
+    if (this.state.showTwo && this.state.openMailModal) {
+      const showTwo = this.state.showTwo;
+      this.setState({ showTwo: !showTwo })
+    }
+    if (this.state.showThree && this.state.InformationFiveModal) {
+      const showThree = this.state.showThree;
+      this.setState({ showThree: !showThree })
+    }
+  }
 
   //funtion for deciding what to do when Jack lands on a specific position
-  handleKeyPress = () => {
+  handleKeyPress = (e) => {
+    e.preventDefault();
+
+    const enter = e.keyCode;
 
     //position will be an array of [x,y]  
     let position = store.getState().player.position;
     let direction = store.getState().player.direction;
     const x = position[0];
     const y = position[1];
-    const triviaOpen = this.state.onTriviaOne;
 
-    console.log(direction);
     //if player lands on position with these coordinates, run modal questions
-    if (x === 64 && y === 64 && !triviaOpen && direction === "NORTH") {
-      this.openModal()
+    if(enter === 13){
+      //modal for saving states to database
+      if ((x === 192 && y === 64 && direction === "EAST") || (x === 256 && y === 128 && direction === "NORTH")) {
+        this.saveGame();
+      }
+      //modal for mail
+      if ((x === 192 && y === 192 && direction === "EAST") || (x === 256 && y === 256 && direction === "NORTH") || (x === 320 && y === 192 && direction === "WEST")) {
+        this.openMail();
+        this.toggleExclamation();
+      }
+      //TA Modal One
+      if (x === 0 && y === 128 && direction === "NORTH") {
+        this.taOne();
+      }
+      //TA Modal Two
+      if (x === 1536 && y === 192 && direction === "NORTH") {
+        this.taTwo();
+      }
+      //TA Modal Three
+      if (x === 1152 && y === 256 && direction === "NORTH") {
+        this.taThree();
+      }
+      //information modal One
+      if ((x === 320 && y === 512 && direction === "EAST") || (x === 384 && y === 576 && direction === "NORTH") || (x === 448 && y === 512 && direction === "WEST") || (x === 384 && y === 448 && direction === "SOUTH")) {
+        this.informationOne();
+        this.toggleExclamation();
+      }
+      //Information modal Two
+      if ((x === 512 && y === 128 && direction === "NORTH") || (x === 576 && y === 128 && direction === "NORTH")) {
+        this.informationTwo();
+      }
+      //information modal Three (ocean modal)
+      if (x === 1152 && y === 64 && direction === "NORTH") {
+        this.informationThree();
+        this.toggleExclamation();
+      }
+      //information modal Four
+      if (x === 1280 && y === 256 && direction === "NORTH") {
+        this.informationFour();
+      }
+      //information modal Five
+      if (x === 1024 && y === 576 && direction === "NORTH") {
+        this.informationFive();
+        this.toggleExclamation();
+      }
+      //upgrade Jack
+      if (x === 832 && y === 64 && direction === "NORTH") {
+        this.modalJack();
+      }
+      //final interview
+      if (x === 64 && y === 704 && direction === "WEST") {
+        this.modalFinal();
+      }
     }
-    if (x === 384 && y === 128 && !triviaOpen && direction === "NORTH") {
-      this.openModal()
-    }
-    if (x === 960 && y === 128 && !triviaOpen && direction === "NORTH") {
-      this.openModal()
-    }
-    //turn off ability to reopen modal while still being on the same tile. must go off tile and come back on.
-    if (!(x === 64 && y === 64) && !(x === 384 && y === 128) && !(x === 960 && y === 128)) {
+  }
+
+  /******** Save game modal  *************/
+  saveGame = () => {
+    this.setState({saveGameModal: true});
+  }
+  closeSaveGame = () => {
+    this.setState({saveGameModal: false});
+  }
+  /******** Save game modal  *************/
+
+  /****** mailbox modal for directions to the game ********/
+  openMail = () => {
+    this.setState({openMailModal: true});
+  }
+  closeOpenMail = () => {
+    this.setState({openMailModal: false});
+  }
+  /****** mailbox modal for directions to the game ********/
+
+
+
+  /****** TA One Modal ********/
+  taOne = () => {
+    this.setState({taOneModal: true});
+  }
+  closeTaOne = () => {
+    this.setState({taOneModal: false});
+  }
+  /****** TA One Modal ********/
+
+  /****** TA Two Modal ********/
+  taTwo = () => {
+    this.setState({taTwoModal: true});
+  }
+  closeTaTwo = () => {
+    this.setState({taTwoModal: false});
+  }
+  /****** TA Two Modal ********/
+
+  /****** TA Three Modal ********/
+  taThree = () => {
+    this.setState({taThreeModal: true});
+  }
+  closeTaThree = () => {
+    this.setState({taThreeModal: false});
+  }
+  /****** TA Three Modal ********/
+  
+
+
+  /****** Information One Modal ********/
+  informationOne = () => {
+    this.setState({InformationOneModal: true});
+  }
+  closeInformationOne = () => {
+    this.setState({InformationOneModal: false});
+  }
+  /****** Information One Modal ********/
+
+  /****** Information Two Modal ********/
+  informationTwo = () => {
+    this.setState({InformationTwoModal: true});
+  }
+  closeInformationTwo = () => {
+    this.setState({InformationTwoModal: false});
+  }
+  /****** Information Two Modal ********/
+  
+  /****** Information Three Modal ********/
+  informationThree = () => {
+    this.setState({InformationThreeModal: true});
+  }
+  closeInformationThree = () => {
+    this.setState({InformationThreeModal: false});
+  }
+  /****** Information Three Modal ********/
+  
+  /****** Information Four Modal ********/
+  informationFour = () => {
+    this.setState({InformationFourModal: true});
+  }
+  closeInformationFour = () => {
+    this.setState({InformationFourModal: false});
+  }
+  /****** Information Four Modal ********/
+  
+  /****** Information Five Modal ********/
+  informationFive = () => {
+    this.setState({InformationFiveModal: true});
+  }
+  closeInformationFive = () => {
+    this.setState({InformationFiveModal: false});
+  }
+  /****** Information Five Modal ********/
+  
+
+
+  /********** Upgrade Jack ********/
+   modalJack = () => {
+
+    if(this.props.coin >= 5) {
       this.setState({
-        onTriviaOne: false,
+        modalJackisOpen: true,
+        jackUpgradePossible: "Jack has been upgraded!"
+      });
+      this.upgradeJack();
+    } else {
+      this.setState({
+        modalJackisOpen: true,
+        jackUpgradePossible: "Not enough coin!"
       });
     }
-
-    //bulletin board 
-    if (x === 1280 && y === 128 && direction === "NORTH") {
-      this.openModalFour()
-    }
-
-    //upgrade Jack
-    if (x === 1408 && y === 704 && direction === "SOUTH") {
-      this.upgradeJack()
-    }
-    //final interview
-    if (x === 640 && y === 640 && direction === "SOUTH") {
-      this.finalInterview()
-    }
   }
 
-
-
-
-  //function to increase coin count
-  increaseCoins = () => {
-    let newCoins = this.state.coin + 1
+  closeModalJack = () => {
     this.setState({
-      coin: newCoins
-    })
-
-    this.closeModal();
-  }
-
-
-  /**********Bulletin Board Modal ********/
-  openModalFour = () => {
-    this.setState({
-      modalFourIsOpen: true,
+      modalJackisOpen: false,
     });
   }
-
-  closeModalFour = () => {
-    this.setState({
-      modalFourIsOpen: false,
-    });
-  }
-  /********** Bulletin Board Modal ********/
-
-
-
-
-  /********** Practice Questions Modal ********/
-  openModal = () => {
-    this.setState({
-      modalOneIsOpen: true,
-    });
-  }
-
-  closeModal = () => {
-    this.setState({
-      modalOneIsOpen: false,
-      onTriviaOne: true,
-    });
-  }
-  /********** Practice Questions Modal ********/
-
-
-
-
-  /********** Upgrade Jack ********/
+   
   upgradeJack = () => {
 
-    if (this.state.coin >= 5) {
+      let newCoins = this.props.coin - 5;
+      let newLevel = this.props.level + 1;
 
-      let newCoins = this.state.coin - 5;
-      let newLevel = this.state.level + 1;
-
-      alert("upgraded Jack");
-
-      this.setState({
-        coin: newCoins,
-        level: newLevel
+      store.dispatch({
+        type: 'UPGRADE_PLAYER',
+        payload: {
+          level: newLevel,
+        }
       })
-    } else {
-      alert("Insufficient Coins");
-    }
+      store.dispatch({
+        type: 'ADD_COIN',
+        payload: {
+          coin: newCoins,
+        }
+      })
    
   }
-
   /********** Upgrade Jack ********/
 
-
-
-
   /********** Final Interview ********/
+  modalFinal = () => {
+
+    if(this.props.level >= 3) {
+      this.setState({
+        modalFinalisOpen: true,
+      });
+    } else {
+      this.setState({
+        modalFinalNotReady: true,
+      });
+    }
+  }
+
+  closeModalFinal = () => {
+    this.setState({
+      modalFinalisOpen: false,
+      modalFinalNotReady: false,
+    });
+  }
+   
   finalInterview = () => {
     
-    if (this.state.level >= 3) {
-      alert("Final Interview, Congratulations!")
-    } else {
-      alert("You are not ready yet.");
-    }
   }
   /********** Final Interview ********/
 
@@ -247,17 +366,124 @@ class Map extends React.Component {
               width: '1600px',
               height: '768px',
               border: '4px solid white',
-              backgroundImage: `url('${bgImage}')`,
+              backgroundImage: `url('${this.props.bgImage}')`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover"
           }}
           >
-          
-            
+
+
+  {/* Exclamation mark on tree */}
+          { this.state.showOne && 
+          <div 
+            style={{
+                position: 'absolute',
+                top: '490px',
+                left: '375px',
+                width: "64px",
+                height: "64px",
+                zIndex: 2,
+                backgroundImage: `url('${whiteMark}')`,
+            }}>
+          </div>}
+
+  {/* Exclamation mark on tree */}
+          { this.state.showTwo && 
+          <div 
+            style={{
+                position: 'absolute',
+                top: '180px',
+                left: '260px',
+                width: "64px",
+                height: "64px",
+                zIndex: 2,
+                backgroundImage: `url('${whiteMark}')`,
+            }}>
+          </div>}
+ 
+  {/* Exclamation mark on tree */}
+          { this.state.showThree && 
+          <div 
+            style={{
+                position: 'absolute',
+                top: '450px',
+                left: '1021px',
+                width: "64px",
+                height: "64px",
+                zIndex: 2,
+                backgroundImage: `url('${whiteMark}')`,
+            }}>
+          </div>}
+
+  {/* Initial opening modal */}
           <Modal
             ariaHideApp={false}
-            isOpen={this.state.openingModal}
-            onRequestClose={this.closeModalFunc}
+            isOpen={this.state.openNowModal}
+            onRequestClose={this.closeOpenNow}
+            className="Modaltest"
+            overlayClassName="Overlaytest"
+            contentLabel="Modaltest"
+          >
+            <div style={{
+              marginTop: "20px",
+              textAlign: "center",
+            }}>
+              <p>Hi, {this.state.name}.</p>
+              <p>Remember to check your mail first!</p>
+            </div>
+            <form>
+              <button type="button" onClick={this.closeOpenNow} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
+          </Modal>
+
+
+
+
+
+
+  {/* Saving game modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.saveGameModal}
+            onRequestClose={this.closeSaveGame}
+            className="Modal"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
+          >
+            <div style={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              backgroundImage: `url('${billboard}')`,
+              width: '100%',
+              height: '100%',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover"
+            }}>
+              <p>Save Game Modal</p>
+            </div>
+            <form>
+              <button type="button" onClick={this.closeSaveGame} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
+          </Modal>
+
+  {/* Mailbox modal */}  
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.openMailModal}
+            onRequestClose={this.closeOpenMail}
             className="Modal"
             overlayClassName="Overlay"
             contentLabel="Modal"
@@ -275,34 +501,78 @@ class Map extends React.Component {
               Once Jack has reached level 3, he can go to the interviewer at Google (Alex) and try to land that awesome job at Google!</p>
               </div>
             <form>
-              <button  type="button" onClick={this.closeModalFunc}>Got it</button>
+              <button  type="button" onClick={this.closeOpenMail}>Got it</button>
             </form>
           </Modal>
 
+  {/* TA in the woods modal */}
           <Modal
             ariaHideApp={false}
-            isOpen={this.state.modalFourIsOpen}
-            onRequestClose={this.closeModalFour}
+            isOpen={this.state.taOneModal}
+            onRequestClose={this.closeTaOne}
+            className="ModalTaOne"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
+         
+          >
+            <TriviaOne increaseCoins={this.increaseCoins}/>
+            <br /><br />
+            <button type="button" onClick={this.closeTaOne}>Close</button>
+
+          </Modal>
+
+  {/* TA at lemonade stand modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.taTwoModal}
+            onRequestClose={this.closeTaTwo}
             className="Modal"
             overlayClassName="Overlay"
             contentLabel="Modal"
           >
+            <TriviaTwo increaseCoins={this.increaseCoins}/>
+            <br /><br />
+            <button type="button" onClick={this.closeTaTwo}>Close</button>
 
+          </Modal>
+
+  {/* TA at far right modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.taThreeModal}
+            onRequestClose={this.closeTaThree}
+            className="Modal"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
+          >
+            <TriviaThree increaseCoins={this.increaseCoins}/>
+            <br /><br />
+            <button type="button" onClick={this.closeTaThree}>Close</button>
+
+          </Modal>
+
+  {/* First Tree after home modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.InformationOneModal}
+            onRequestClose={this.closeInformationOne}
+            className="Modal"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
+          >
             <div style={{
               position: "absolute",
               top: "0px",
               left: "0px",
-              backgroundImage: `url('${billboard}')`,
+              backgroundImage: `url('${treeModal}')`,
               width: '100%',
               height: '100%',
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover"
-
             }}>
-   
-              </div>
+            </div>
             <form>
-              <button type="button" onClick={this.closeModalFour} 
+              <button type="button" onClick={this.closeInformationOne} 
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -312,60 +582,182 @@ class Map extends React.Component {
             </form>
           </Modal>
 
-
+  {/* Large courtyard modal */}
           <Modal
             ariaHideApp={false}
-            isOpen={this.state.modalOneIsOpen}
-            onRequestClose={this.closeModal}
+            isOpen={this.state.InformationTwoModal}
+            onRequestClose={this.closeInformationTwo}
             className="Modal"
             overlayClassName="Overlay"
             contentLabel="Modal"
           >
-            <TriviaOne increaseCoins={this.increaseCoins}/>
-            <button type="button" onClick={this.closeModal}>Close</button>
-
+            <div style={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              backgroundImage: `url('${billboard}')`,
+              width: '100%',
+              height: '100%',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover"
+            }}>
+            </div>
+            <form>
+              <button type="button" onClick={this.closeInformationTwo} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
           </Modal>
 
+  {/* Ocean modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.InformationThreeModal}
+            onRequestClose={this.closeInformationThree}
+            className="Modal"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
+          >
+            <div style={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              backgroundImage: `url('${oceanModal}')`,
+              width: '100%',
+              height: '100%',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover"
+            }}>
+            </div>
+            <form>
+              <button type="button" onClick={this.closeInformationThree} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
+          </Modal>
+
+  {/* Third tree modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.InformationFourModal}
+            onRequestClose={this.closeInformationFour}
+            className="Modal"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
+          >
+            <div style={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              backgroundImage: `url('${oceanModal}')`,
+              width: '100%',
+              height: '100%',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover"
+            }}>
+            </div>
+            <form>
+              <button type="button" onClick={this.closeInformationFour} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
+          </Modal>
+
+  {/* Final path modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.InformationFiveModal}
+            onRequestClose={this.closeInformationFive}
+            className="Modal"
+            overlayClassName="Overlay"
+            contentLabel="Modal"
+          >
+            <div style={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              backgroundImage: `url('${deckModal}')`,
+              width: '100%',
+              height: '100%',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover"
+            }}>
+            </div>
+            <form>
+              <button type="button" onClick={this.closeInformationFive} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
+          </Modal>
+
+  {/* Upgrade Jack modal */}
           <Modal
              ariaHideApp={false}
-             isOpen={this.state.modalTwoIsOpen}
-             onRequestClose={this.closeModal}
+             isOpen={this.state.modalJackisOpen}
+             onRequestClose={this.closeModalJack}
              className="Modal"
              overlayClassName="Overlay"
              contentLabel="Modal"
           >
 
-            <h2 ref={subtitle => this.subtitle = subtitle}>Question #1</h2>
+            <h2 ref={subtitle => this.subtitle = subtitle}></h2>
             <div>
-              <p>True or False</p>
-              <p>HTML stands for Hypertext Markup Language.</p>
+              <p>{this.state.jackUpgradePossible}</p>
               </div>
             <form>
-              <button type="button" onClick={this.increaseCoins}>True</button>
-              <button  type="button" onClick={this.closeModal}>False</button>
+              <button  type="button" onClick={this.closeModalJack}>Got it</button>
             </form>
           </Modal>
 
+  {/* Alex final interview not ready*/}
           <Modal
               ariaHideApp={false}
-              isOpen={this.state.modalThreeIsOpen}
-              onRequestClose={this.closeModal}
+              isOpen={this.state.modalFinalNotReady}
+              onRequestClose={this.closeModalFinal}
               className="Modal"
               overlayClassName="OverlayFinal"
               contentLabel="Modal"
           >
 
-            <h2 ref={subtitle => this.subtitle = subtitle}>Question #1</h2>
+            <h2 ref={subtitle => this.subtitle = subtitle}>Final Boss</h2>
             <div>
-              <p>True or False</p>
-              <p>HTML stands for Hypertext Markup Language.</p>
+              <p>You are not ready to interview with Alex!</p>
               </div>
             <form>
-              <button type="button" onClick={this.increaseCoins}>True</button>
-              <button  type="button" onClick={this.closeModal}>False</button>
+              <button  type="button" onClick={this.closeModalFinal}>Got It</button>
             </form>
           </Modal>
+  {/* Alex final interview modal*/}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.modalFinalisOpen}
+            onRequestClose={this.closeModalFinal}
+            className="Modal"
+            overlayClassName="OverlayFinal"
+            contentLabel="Modal"
+          >
+            <FinalBoss />
+            <button type="button" onClick={this.closeModalFinal}>Close</button>
 
+          </Modal>
+
+  {/* Coin and Level components */}
           <div style={{
             position: "absolute",
             width: "226px",
@@ -376,26 +768,50 @@ class Map extends React.Component {
             border: "solid 4px #ffffff"
 
           }}>
-              <Coins coin={this.state.coin}/>
-              <Level level={this.state.level}/>
+              <Coins coin={this.props.coin}/>
+              <Level level={this.props.level}/>
           </div>
 
-          {
-              this.props.tiles.map( row => <MapRow tiles={row} /> )
-          }
-          
+  {/* Map 2nd layer */}
+          <div 
+            style={{
+                position: 'absolute',
+                top: '-5px',
+                left: '-554px',
+                width: "100%",
+                height: "100%",
+                zIndex: 2,
+                backgroundImage: `url('${bush}')`,
+         
+           
+            }}>
           </div>
+
+  {/* Layout tiles for map */}
+          {this.props.tiles.map( row => <MapRow tiles={row} /> )}
+          
+        </div>
       </>
     )
   }
 }
 
 
-
-function mapStateToProps(state) {
+//mapStateToProps is normal convention for naming this function
+//the "state" parameter will be given to you by redux
+const mapStateToProps = state => {
   return {
+    //this is grabbing the tiles inside map state
     tiles: state.map.tiles,
+    //this you can use by using "this.props.tiles"
+    coin: state.coin.coin,
+    level: state.level.level,
+    bgImage: state.map.bgImage,
+    name: state.map.name,
+    show: state.map.show,
   }
 }
 
-export default connect(mapStateToProps)(Map)
+//connect is a function that returns a function that returns a higher order component
+
+export default connect(mapStateToProps)(Map);

@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
+//import player sprite
 import walkSprite from './walker23.png';
 import handleMovement from './movement';
 

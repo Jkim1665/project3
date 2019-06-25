@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 
 class Level extends React.Component {
  
@@ -18,8 +19,11 @@ class Level extends React.Component {
     }
   }
   
+  const mapStateToProps = state => {
+    return {
+      level: state.level.level,
+    }
+  }
 
 
-
-
-export default Level;
+export default connect(mapStateToProps)(Level);

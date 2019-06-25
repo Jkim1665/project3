@@ -20,6 +20,4 @@ class Coins extends React.Component {
   
 
 
-
-
 export default Coins;
