@@ -2,22 +2,31 @@ import React from 'react';
 import store from "../../config/store";
 import { connect } from 'react-redux';
 
-class TriviaOne extends React.Component {
+class FinalBoss extends React.Component {
 
     state ={
-        shuffledQuestions: [],
+        questions: [
+            {q: "The answer is answerOne?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerOne"},
+            {q: "The answer is answerTwo?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerTwo"},
+            {q: "The answer is answerThree?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerThree"},
+            {q: "The answer is answerFour?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerFour"},
+            {q: "The answer is answerFive?", a1: "answerFive", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerFive"},
+            {q: "The answer is answerSix?", a1: "answerOne", a2: "answerSix", a3: "answerThree", a4: "answerFour", c: "answerSix"},
+            {q: "The answer is answerSeven?", a1: "answerOne", a2: "answerTwo", a3: "answerSeven", a4: "answerFour", c: "answerSeven"},
+            {q: "The answer is answerEight?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerEight", c: "answerEight"},
+        ],
         question: "",
         answerOne: "",
         answerTwo: "",
         answerThree: "",
         answerFour: "",
         correctAnswer: "",
-        questionNum: "",
         questionIndex: 0,
+        questionNum: "",
     }
 
     componentDidMount() {
-        this.shuffleArray();
+        this.questionsOne();
     }
 
 
@@ -37,98 +46,46 @@ class TriviaOne extends React.Component {
     }
 
     answeredQuestion = (answer) => {
-
+       
         console.log(answer.target.value);
         if (answer.target.value === this.state.correctAnswer) {
             this.increaseCoins();
         } else {
             this.questionsOne();
         }
-
-        const newQuestIndex = this.questionIndex + 1;
-
-        this.setState({
-            questionIndex: newQuestIndex,
-        })
-      
-
+     
     }
 
-    //Fisher-Yates Shuffle
-    shuffle = (array) => {
-    let counter = array.length;
-
-    // While there are elements in the array
-    while (counter > 0) {
-        // Pick a random index
-        let index = Math.floor(Math.random() * counter);
-
-        // Decrease counter by 1
-        counter--;
-
-        // And swap the last element with it
-        let temp = array[counter];
-        array[counter] = array[index];
-        array[index] = temp;
-    }
-
-    return array;
-    }
-
-
-    shuffleArray = () => {
-        const questions = [
-
-            {q: "The answer is answerOne ?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerOne", im: "forrest.jpg"},
-            {q: "The answer is answerTwo?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerTwo", im: "agnes.gif"},
-            {q: "The answer is answerThree?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerThree", im: "carlton.gif"},
-            {q: "The answer is answerFour?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerFour", im: "scar.gif"},
-            {q: "The answer is answerFive ?", a1: "answerOne", a2: "answerTwo", a3: "answerFive", a4: "answerFour", c: "answerFive", im: "forrest.jpg"},
-            {q: "The answer is answerSix?", a1: "answerSix", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerSix", im: "agnes.gif"},
-            {q: "The answer is answerSeven?", a1: "answerOne", a2: "answerSeven", a3: "answerThree", a4: "answerFour", c: "answerSeven", im: "carlton.gif"},
-            {q: "The answer is answerEight?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerEight", c: "answerEight", im: "scar.gif"},
-
-        ];
-
-         //shuffle questions
-        let newQuestions = this.shuffle(questions);
-
-        console.log(newQuestions);
-        console.log(this.state)
-        this.setState({
-            shuffledQuestions: newQuestions,
-        });
-
-        this.questionsOne();
-    }
-
-
-    //play game with shuffled array
+    //set state to next question
     questionsOne = () => {
 
-        let newQues = this.state.shuffledQuestions;
-        let questIndex = this.state.questionIndex
-console.log(newQues)
-        if (questIndex < newQues.length) {
+        const questIndex = this.state.questionIndex + 1;
+
+        if (this.state.questionIndex < this.state.questions.length) {
+            const questions = this.state.questions[this.state.questionIndex];
 
             this.setState({
-                question: newQues[questIndex].q,
-                answerOne: newQues[questIndex].a1,
-                answerTwo: newQues[questIndex].a2,
-                answerThree: newQues[questIndex].a3,
-                answerFour: newQues[questIndex].a4,
-                correctAnswer: newQues[questIndex].c,
+                question: questions.q,
+                answerOne: questions.a1,
+                answerTwo: questions.a2,
+                answerThree: questions.a3,
+                answerFour: questions.a4,
+                correctAnswer: questions.c,
                 questionNum: "Question #" + questIndex,
-            })
-
+                questionIndex: questIndex,
+            });
         } else {
             this.setState({
-                question: "You have completed this question set. Close and try again.",
-                questionNum: ""
+                question: "You have completed this set of questions.",
+                questionNum: "",
+                answerOne: "",
+                answerTwo: "",
+                answerThree: "",
+                answerFour: "",
+                correctAnswer: "",
+                questionIndex: 0,
             })
         }
-      
-
     }
   
 
@@ -163,4 +120,4 @@ const mapStateToProps = state => {
     }
   }
   
-  export default connect(mapStateToProps)(TriviaOne);
+  export default connect(mapStateToProps)(FinalBoss);

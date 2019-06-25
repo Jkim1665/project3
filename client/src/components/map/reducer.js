@@ -1,6 +1,8 @@
 const initialState = {
   tiles: [],
-  bgImage: ""
+  bgImage: "",
+  name: "",
+  show: true,
 }
 
 const mapReducer = (state=initialState, action) => {

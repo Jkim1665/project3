@@ -13,6 +13,11 @@ import TriviaOne from "../TriviaOne";
 import TriviaTwo from "../TriviaTwo";
 import TriviaThree from "../TriviaThree";
 import FinalBoss from "../FinalBoss";
+import treeModal from "./treeModal.png";
+import bush from "./bushextra.png";
+import whiteMark from "./whiteMark.png";
+import deckModal from "./deckModal.png";
+import oceanModal from "./oceanModal.png";
 
 //this function gets the tile file to put into the background of that tile
 function getTileSprite(type) {
@@ -69,15 +74,46 @@ class Map extends React.Component {
     jackUpgradePossible: "",
     modalFinalisOpen: false,
     modalFinalNotReady: false,
+    openNowModal: false,
+    name: "Jack",
+    showOne: true,
+    showTwo: true,   
+    showThree: true,
   }
 
   
-
   // this will grab the player's location each time a key is pressed
   componentDidMount() {
     document.addEventListener("keyup", (e) => {
       this.handleKeyPress(e)
     });
+    this.openNow()
+  }
+
+  /******** Opening game modal  *************/
+  openNow = () => {
+    this.setState({openNowModal: true});
+  }
+  closeOpenNow = () => {
+    this.setState({openNowModal: false});
+  }
+  /******** Opening game modal  *************/
+  
+  //code for exclamation marks
+  toggleExclamation = () => {
+
+    if (this.state.showOne && this.state.InformationOneModal) {
+      const showOne = this.state.showOne;
+      this.setState({ showOne: !showOne })
+    }
+    if (this.state.showTwo && this.state.openMailModal) {
+      const showTwo = this.state.showTwo;
+      this.setState({ showTwo: !showTwo })
+    }
+    if (this.state.showThree && this.state.InformationFiveModal) {
+      const showThree = this.state.showThree;
+      this.setState({ showThree: !showThree })
+    }
   }
 
   //funtion for deciding what to do when Jack lands on a specific position
@@ -95,52 +131,56 @@ class Map extends React.Component {
     //if player lands on position with these coordinates, run modal questions
     if(enter === 13){
       //modal for saving states to database
-      if (x === 192 && y === 64 && direction === "EAST") {
-        this.saveGame()
+      if ((x === 192 && y === 64 && direction === "EAST") || (x === 256 && y === 128 && direction === "NORTH")) {
+        this.saveGame();
       }
       //modal for mail
-      if (x === 192 && y === 192 && direction === "EAST") {
-        this.openMail()
+      if ((x === 192 && y === 192 && direction === "EAST") || (x === 256 && y === 256 && direction === "NORTH") || (x === 320 && y === 192 && direction === "WEST")) {
+        this.openMail();
+        this.toggleExclamation();
       }
       //TA Modal One
       if (x === 0 && y === 128 && direction === "NORTH") {
-        this.taOne()
+        this.taOne();
       }
       //TA Modal Two
-      if (x === 1536 && y === 128 && direction === "SOUTH") {
-        this.taTwo()
+      if (x === 1536 && y === 192 && direction === "NORTH") {
+        this.taTwo();
       }
       //TA Modal Three
-      if (x === 1088 && y === 256 && direction === "SOUTH") {
-        this.taThree()
+      if (x === 1152 && y === 256 && direction === "NORTH") {
+        this.taThree();
       }
       //information modal One
-      if (x === 320 && y === 512 && direction === "EAST") {
-        this.informationOne()
+      if ((x === 320 && y === 512 && direction === "EAST") || (x === 384 && y === 576 && direction === "NORTH") || (x === 448 && y === 512 && direction === "WEST") || (x === 384 && y === 448 && direction === "SOUTH")) {
+        this.informationOne();
+        this.toggleExclamation();
       }
       //Information modal Two
       if ((x === 512 && y === 128 && direction === "NORTH") || (x === 576 && y === 128 && direction === "NORTH")) {
-        this.informationTwo()
+        this.informationTwo();
       }
-      //information modal Three
-      if (x === 832 && y === 320 && direction === "EAST") {
-        this.informationThree()
+      //information modal Three (ocean modal)
+      if (x === 1152 && y === 64 && direction === "NORTH") {
+        this.informationThree();
+        this.toggleExclamation();
       }
       //information modal Four
       if (x === 1280 && y === 256 && direction === "NORTH") {
-        this.informationFour()
+        this.informationFour();
       }
       //information modal Five
-      if (x === 1024 && y === 640 && direction === "NORTH") {
-        this.informationFive()
+      if (x === 1024 && y === 576 && direction === "NORTH") {
+        this.informationFive();
+        this.toggleExclamation();
       }
       //upgrade Jack
       if (x === 832 && y === 64 && direction === "NORTH") {
-        this.modalJack()
+        this.modalJack();
       }
       //final interview
       if (x === 64 && y === 704 && direction === "WEST") {
-        this.modalFinal()
+        this.modalFinal();
       }
     }
   }
@@ -332,6 +372,82 @@ class Map extends React.Component {
           }}
           >
 
+
+  {/* Exclamation mark on tree */}
+          { this.state.showOne && 
+          <div 
+            style={{
+                position: 'absolute',
+                top: '490px',
+                left: '375px',
+                width: "64px",
+                height: "64px",
+                zIndex: 2,
+                backgroundImage: `url('${whiteMark}')`,
+            }}>
+          </div>}
+
+  {/* Exclamation mark on tree */}
+          { this.state.showTwo && 
+          <div 
+            style={{
+                position: 'absolute',
+                top: '180px',
+                left: '260px',
+                width: "64px",
+                height: "64px",
+                zIndex: 2,
+                backgroundImage: `url('${whiteMark}')`,
+            }}>
+          </div>}
+ 
+  {/* Exclamation mark on tree */}
+          { this.state.showThree && 
+          <div 
+            style={{
+                position: 'absolute',
+                top: '450px',
+                left: '1021px',
+                width: "64px",
+                height: "64px",
+                zIndex: 2,
+                backgroundImage: `url('${whiteMark}')`,
+            }}>
+          </div>}
+
+  {/* Initial opening modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.openNowModal}
+            onRequestClose={this.closeOpenNow}
+            className="Modaltest"
+            overlayClassName="Overlaytest"
+            contentLabel="Modaltest"
+          >
+            <div style={{
+              marginTop: "20px",
+              textAlign: "center",
+            }}>
+              <p>Hi, {this.state.name}.</p>
+              <p>Remember to check your mail first!</p>
+            </div>
+            <form>
+              <button type="button" onClick={this.closeOpenNow} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
+          </Modal>
+
+
+
+
+
+
+  {/* Saving game modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.saveGameModal}
@@ -362,7 +478,8 @@ class Map extends React.Component {
                 }}>X</button>
             </form>
           </Modal>
-            
+
+  {/* Mailbox modal */}  
           <Modal
             ariaHideApp={false}
             isOpen={this.state.openMailModal}
@@ -388,13 +505,15 @@ class Map extends React.Component {
             </form>
           </Modal>
 
+  {/* TA in the woods modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.taOneModal}
             onRequestClose={this.closeTaOne}
-            className="Modal"
+            className="ModalTaOne"
             overlayClassName="Overlay"
             contentLabel="Modal"
+         
           >
             <TriviaOne increaseCoins={this.increaseCoins}/>
             <br /><br />
@@ -402,6 +521,7 @@ class Map extends React.Component {
 
           </Modal>
 
+  {/* TA at lemonade stand modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.taTwoModal}
@@ -416,6 +536,7 @@ class Map extends React.Component {
 
           </Modal>
 
+  {/* TA at far right modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.taThreeModal}
@@ -430,6 +551,7 @@ class Map extends React.Component {
 
           </Modal>
 
+  {/* First Tree after home modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.InformationOneModal}
@@ -442,7 +564,7 @@ class Map extends React.Component {
               position: "absolute",
               top: "0px",
               left: "0px",
-              backgroundImage: `url('${billboard}')`,
+              backgroundImage: `url('${treeModal}')`,
               width: '100%',
               height: '100%',
               backgroundRepeat: "no-repeat",
@@ -460,6 +582,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
+  {/* Large courtyard modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.InformationTwoModal}
@@ -490,6 +613,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
+  {/* Ocean modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.InformationThreeModal}
@@ -502,7 +626,7 @@ class Map extends React.Component {
               position: "absolute",
               top: "0px",
               left: "0px",
-              backgroundImage: `url('${billboard}')`,
+              backgroundImage: `url('${oceanModal}')`,
               width: '100%',
               height: '100%',
               backgroundRepeat: "no-repeat",
@@ -520,6 +644,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
+  {/* Third tree modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.InformationFourModal}
@@ -532,7 +657,7 @@ class Map extends React.Component {
               position: "absolute",
               top: "0px",
               left: "0px",
-              backgroundImage: `url('${billboard}')`,
+              backgroundImage: `url('${oceanModal}')`,
               width: '100%',
               height: '100%',
               backgroundRepeat: "no-repeat",
@@ -550,6 +675,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
+  {/* Final path modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.InformationFiveModal}
@@ -562,7 +688,7 @@ class Map extends React.Component {
               position: "absolute",
               top: "0px",
               left: "0px",
-              backgroundImage: `url('${billboard}')`,
+              backgroundImage: `url('${deckModal}')`,
               width: '100%',
               height: '100%',
               backgroundRepeat: "no-repeat",
@@ -580,6 +706,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
+  {/* Upgrade Jack modal */}
           <Modal
              ariaHideApp={false}
              isOpen={this.state.modalJackisOpen}
@@ -598,6 +725,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
+  {/* Alex final interview not ready*/}
           <Modal
               ariaHideApp={false}
               isOpen={this.state.modalFinalNotReady}
@@ -615,7 +743,7 @@ class Map extends React.Component {
               <button  type="button" onClick={this.closeModalFinal}>Got It</button>
             </form>
           </Modal>
-
+  {/* Alex final interview modal*/}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.modalFinalisOpen}
@@ -629,6 +757,7 @@ class Map extends React.Component {
 
           </Modal>
 
+  {/* Coin and Level components */}
           <div style={{
             position: "absolute",
             width: "226px",
@@ -643,11 +772,25 @@ class Map extends React.Component {
               <Level level={this.props.level}/>
           </div>
 
-          {
-              this.props.tiles.map( row => <MapRow tiles={row} /> )
-          }
-          
+  {/* Map 2nd layer */}
+          <div 
+            style={{
+                position: 'absolute',
+                top: '-5px',
+                left: '-554px',
+                width: "100%",
+                height: "100%",
+                zIndex: 2,
+                backgroundImage: `url('${bush}')`,
+         
+           
+            }}>
           </div>
+
+  {/* Layout tiles for map */}
+          {this.props.tiles.map( row => <MapRow tiles={row} /> )}
+          
+        </div>
       </>
     )
   }
@@ -663,7 +806,9 @@ const mapStateToProps = state => {
     //this you can use by using "this.props.tiles"
     coin: state.coin.coin,
     level: state.level.level,
-    bgImage: state.map.bgImage
+    bgImage: state.map.bgImage,
+    name: state.map.name,
+    show: state.map.show,
   }
 }
 

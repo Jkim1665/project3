@@ -15,6 +15,21 @@
   background-repeat: no-repeat;
 }
 
+.ModalTaOne {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  background-color: rgb(65, 65, 65);
+  text-align: center;
+  color: #ffffff;
+  font-size: 30px;
+  z-index: 3;
+  background-image: url(./modalBG.png);
+  background-position: center;
+}
+
 .Modal {
   position: absolute;
   top: 40px;
@@ -25,7 +40,9 @@
   text-align: center;
   color: #ffffff;
   font-size: 30px;
+  z-index: 3;
 }
+
 
 .Overlay {
   position: fixed;
@@ -34,6 +51,7 @@
   right: 0;
   bottom: 0;
   background-color: rgb(130, 184, 255);
+  z-index: 3;
 }
 
 .OverlayFinal {
@@ -43,6 +61,7 @@
   right: 0;
   bottom: 0;
   background-color: rgb(145, 0, 0);
+  z-index: 3;
 }
 
 button {
@@ -62,4 +81,30 @@ button:hover {
 button:active {
   background-color: rgb(130, 255, 136);
   border: 2px solid #ffffff;
+}
+
+
+
+.Modaltest {
+  position: absolute;
+  top: 240px;
+  left: 240px;
+  right: 240px;
+  height: 250px;
+  text-align: center;
+  background-color: #684729;
+  color: #ffffff;
+  font-size: 40px;
+  z-index: 3;
+  vertical-align: center;
+}
+
+.Overlaytest {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:rgba(0,0,0,0.5);
+  z-index: 3;
 }
