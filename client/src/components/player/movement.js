@@ -84,7 +84,7 @@ export default function handleMovement(player) {
   }
 
   function handleKeyDown(e) {
-    e.preventDefault()
+    // e.preventDefault()
 
     switch(e.keyCode) {
       case 37:
@@ -100,7 +100,7 @@ export default function handleMovement(player) {
         return attemptMove('SOUTH')
 
       default:
-        console.log(e.keyCode)
+        // console.log(e.keyCode)
     }
   }
 

@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-//import World from './components/world'
+import World from './components/world'
 import LoginPage from './components/LoginPage'
 
-class App extends Component {
+import { connect } from 'react-redux';
 
-  state = {
-    isLoggedIn: false
-  }
+class App extends Component {
 
   // func to check db/authentication
   // changes this.state.isLoggedIn
@@ -18,11 +16,18 @@ class App extends Component {
   render() {
     return (
       <div>
-        <LoginPage onSubmit={this.onFormSubmit}/>
+        {this.props.isLoggedIn ? <World /> : <LoginPage />}
       </div>
+
     )
   }
 }
 
 
-export default App
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.isLoggedIn.isLoggedIn
+  }
+}
+
+export default connect(mapStateToProps)(App);
