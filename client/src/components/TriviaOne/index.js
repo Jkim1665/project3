@@ -98,12 +98,13 @@ class TriviaOne extends React.Component {
         return (
             <>
                 <div>
-                    <h2>{this.state.questionNum}</h2>
+                    <h2 style={{color: "#111111"}}>{this.state.questionNum}</h2>
                     <div style={{
                             textAlign: "center",
                             width: "75%",
                             marginLeft: "auto",
                             marginRight: "auto",
+                            color: "#111111",
                         }}>
                         <p>{this.state.question}</p>
                     </div>

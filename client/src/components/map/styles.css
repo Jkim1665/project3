@@ -21,13 +21,16 @@
   left: 40px;
   right: 40px;
   bottom: 40px;
+  padding: 10px 20px;
   background-color: rgb(65, 65, 65);
   text-align: center;
   color: #ffffff;
-  font-size: 30px;
+  font-size: 25px;
   z-index: 3;
   background-image: url(./modalBG.png);
   background-position: center;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
 }
 
 .Modal {
@@ -36,11 +39,14 @@
   left: 40px;
   right: 40px;
   bottom: 40px;
+  padding: 10px 80px;
   background-color: rgb(65, 65, 65);
   text-align: center;
   color: #ffffff;
-  font-size: 30px;
+  font-size: 25px;
   z-index: 3;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
 }
 
 
@@ -69,8 +75,9 @@ button {
   background-color: #ffffff;
   border: 2px solid rgb(130, 184, 255);
   margin: 10px;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
 }
 
 .buttonQ {
@@ -79,8 +86,9 @@ button {
   background-color: #ffffff;
   border: 2px solid rgb(130, 184, 255);
   margin: 10px;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
 }
 
 button:hover {
@@ -101,12 +109,15 @@ button:active {
   left: 240px;
   right: 240px;
   height: 250px;
+  padding: 10px 20px;
   text-align: center;
   background-color: #684729;
   color: #ffffff;
-  font-size: 40px;
+  font-size: 25px;
   z-index: 3;
   vertical-align: center;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
 }
 
 .Overlaytest {
@@ -124,11 +135,31 @@ button:active {
   top: 240px;
   left: 240px;
   right: 240px;
-  height: 250px;
+  padding: 10px 20px;
+  height: 300px;
   text-align: center;
-  background-color: #127c35;
+  background-color: #003e8f;
   color: #ffffff;
-  font-size: 40px;
+  font-size: 25px;
   z-index: 3;
   vertical-align: center;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
+}
+
+.modalUpgrade {
+  position: absolute;
+  top: 240px;
+  left: 240px;
+  right: 240px;
+  padding: 10px 20px;
+  height: 350px;
+  text-align: center;
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 25px;
+  z-index: 3;
+  vertical-align: center;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
 }

@@ -23,13 +23,15 @@ import oceanModal from "./oceanModal.png";
 function getTileSprite(type) {
   switch(type) {
     case 0:
-        return 'blank'
+        return 'blank';
     case 1:
-        return 'blank'
+        return 'blank';
     case 5:
-        return 'blank'
+        return 'blank';
     case 6:
-        return 'blank'
+        return 'blank';
+    default:
+
   }
 }
 
@@ -68,7 +70,7 @@ class Map extends React.Component {
     InformationOneModal: false,
     InformationTwoModal: false,
     InformationThreeModal: false,
-    InformationFourModal: false,
+    afterSaveModal: false,
     InformationFiveModal: false,
     modalJackisOpen: false,
     jackUpgradePossible: "",
@@ -79,6 +81,7 @@ class Map extends React.Component {
     showOne: true,
     showTwo: true,   
     showThree: true,
+    bedModal: false,
   }
 
   
@@ -110,6 +113,27 @@ class Map extends React.Component {
     });
   }
   /******** Opening game modal  *************/
+  /******** Bed modal  *************/
+  bed = () => {
+    this.setState({bedModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
+  }
+  closeBed = () => {
+    this.setState({bedModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
+  }
+  /******** Bed modal  *************/
+
   
   //code for exclamation marks
   toggleExclamation = () => {
@@ -145,6 +169,10 @@ class Map extends React.Component {
       //modal for saving states to database
       if ((x === 192 && y === 64 && direction === "EAST") || (x === 256 && y === 128 && direction === "NORTH")) {
         this.saveGame();
+      }
+      //modal for bed
+      if (x === 192 && y === 64 && direction === "WEST") {
+        this.bed();
       }
       //modal for mail
       if ((x === 192 && y === 192 && direction === "EAST") || (x === 256 && y === 256 && direction === "NORTH") || (x === 320 && y === 192 && direction === "WEST")) {
@@ -188,7 +216,17 @@ class Map extends React.Component {
       }
       //upgrade Jack
       if (x === 832 && y === 64 && direction === "NORTH") {
-        this.modalJack();
+        if(this.props.level < 3){
+          this.setState({
+            modalJackisOpen: true,
+            jackUpgradePossible: `Welcome! Would you like to upgrade Jack to level ${this.props.level + 1}?`
+          });
+        } else {
+          this.setState({
+            modalJackisOpen: true,
+            jackUpgradePossible: "You've reach the maximum level! You are ready to do whatever you want!"
+          });
+        }
       }
       //final interview
       if (x === 64 && y === 704 && direction === "WEST") {
@@ -217,6 +255,27 @@ class Map extends React.Component {
     });
   }
   /******** Save game modal  *************/
+  /****** After Save Modal ********/
+  afterSave = () => {
+    this.setState({saveGameModal:false, afterSaveModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
+  }
+  closeAfterSave = () => {
+    this.setState({afterSaveModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
+  }
+  /****** After Save Modal ********/
+
 
   /****** mailbox modal for directions to the game ********/
   openMail = () => {
@@ -369,27 +428,6 @@ class Map extends React.Component {
   }
   /****** Information Three Modal ********/
   
-  /****** Information Four Modal ********/
-  informationFour = () => {
-    this.setState({InformationFourModal: true});
-    store.dispatch({
-      type: 'MODAL_OPEN',
-      payload: {
-        isAnyModalOpen: true,
-      }
-    });
-  }
-  closeInformationFour = () => {
-    this.setState({InformationFourModal: false});
-    store.dispatch({
-      type: 'MODAL_OPEN',
-      payload: {
-        isAnyModalOpen: false,
-      }
-    });
-  }
-  /****** Information Four Modal ********/
-  
   /****** Information Five Modal ********/
   informationFive = () => {
     this.setState({InformationFiveModal: true});
@@ -415,29 +453,32 @@ class Map extends React.Component {
 
   /********** Upgrade Jack ********/
    modalJack = () => {
-
-    if(this.props.coin >= 5) {
-      this.setState({
-        modalJackisOpen: true,
-        jackUpgradePossible: `Congratulations! Jack has been upgraded to level ${this.props.level + 1}!`
-      });
-      store.dispatch({
-        type: 'MODAL_OPEN',
-        payload: {
-          isAnyModalOpen: true,
-        }
-      });
-      this.upgradeJack();
+    if(this.props.level < 3) {
+      if(this.props.coin >= 5) {
+        this.setState({
+          jackUpgradePossible: `Congratulations! Jack has been upgraded to level ${this.props.level + 1}!`
+        });
+        store.dispatch({
+          type: 'MODAL_OPEN',
+          payload: {
+            isAnyModalOpen: true,
+          }
+        });
+        this.upgradeJack();
+      } else {
+        this.setState({
+          jackUpgradePossible: "Sorry, you don't have enough coins! You can get more coins by going to Will, Guillermo, or Steven and answering their questions correctly!"
+        });
+        store.dispatch({
+          type: 'MODAL_OPEN',
+          payload: {
+            isAnyModalOpen: true,
+          }
+        });
+      }
     } else {
       this.setState({
-        modalJackisOpen: true,
-        jackUpgradePossible: "Sorry Jack, you don't have enough coins! You can get more coins by going to Will, Guillermo, or Steven and answering their questions correctly!"
-      });
-      store.dispatch({
-        type: 'MODAL_OPEN',
-        payload: {
-          isAnyModalOpen: true,
-        }
+        jackUpgradePossible: "You've reach the maximum level! You are ready to do whatever you want!"
       });
     }
   }
@@ -609,7 +650,33 @@ class Map extends React.Component {
                 }}>X</button>
             </form>
           </Modal>
-
+  {/* Bed modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.bedModal}
+            onRequestClose={this.closeBed}
+            className="Modaltest"
+            overlayClassName="Overlaytest"
+            contentLabel="Modaltest"
+          >
+            <div style={{
+              marginTop: "20px",
+              textAlign: "center",
+            }}>
+              <p>This is no time to sleep!</p>
+              <p>Go out there and get your dream job!</p>
+            </div>
+            <form>
+              <button  type="button" onClick={this.closeBed}>Fine...</button>
+              <button type="button" onClick={this.closeBed} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
+          </Modal>
 
 
 
@@ -629,10 +696,38 @@ class Map extends React.Component {
               textAlign: "center",
             }}>
               <p>Hi, {this.state.name}.</p>
-              <p>Your game is now saved.</p>
+              <p>Would you like to save your progress?</p>
             </div>
             <form>
+            <button  type="button" onClick={this.afterSave}>Save Game</button>
+            <button  type="button" onClick={this.closeSaveGame}>Don't Save</button>
               <button type="button" onClick={this.closeSaveGame} 
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "60px"
+                }}>X</button>
+            </form>
+          </Modal>
+  {/* After saving modal */}
+          <Modal
+            ariaHideApp={false}
+            isOpen={this.state.afterSaveModal}
+            onRequestClose={this.closeAfterSave}
+            className="modalSave"
+            overlayClassName="Overlaytest"
+            contentLabel="modalSave"
+          >
+            <div style={{
+              marginTop: "20px",
+              textAlign: "center",
+            }}>
+              <p>Save complete!</p>
+            </div>
+            <form>
+            <button  type="button" onClick={this.closeAfterSave}>Close</button>
+              <button type="button" onClick={this.closeAfterSave} 
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -807,37 +902,6 @@ class Map extends React.Component {
             </form>
           </Modal>
 
-  {/* Third tree modal */}
-          <Modal
-            ariaHideApp={false}
-            isOpen={this.state.InformationFourModal}
-            onRequestClose={this.closeInformationFour}
-            className="Modal"
-            overlayClassName="Overlay"
-            contentLabel="Modal"
-          >
-            <div style={{
-              position: "absolute",
-              top: "0px",
-              left: "0px",
-              backgroundImage: `url('${oceanModal}')`,
-              width: '100%',
-              height: '100%',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover"
-            }}>
-            </div>
-            <form>
-              <button type="button" onClick={this.closeInformationFour} 
-                style={{
-                  position: "absolute",
-                  top: "0px",
-                  left: "0px",
-                  width: "60px"
-                }}>X</button>
-            </form>
-          </Modal>
-
   {/* Final path modal */}
           <Modal
             ariaHideApp={false}
@@ -874,17 +938,16 @@ class Map extends React.Component {
              ariaHideApp={false}
              isOpen={this.state.modalJackisOpen}
              onRequestClose={this.closeModalJack}
-             className="Modal"
-             overlayClassName="Overlay"
-             contentLabel="Modal"
+             className="modalUpgrade"
+             overlayClassName="Overlaytest"
+             contentLabel="modalUpgrade"
           >
-
-            <h2 ref={subtitle => this.subtitle = subtitle}></h2>
             <div>
-              <p>{this.state.jackUpgradePossible}</p>
+              <p style={{fontSize: "30px"}}>{this.state.jackUpgradePossible}</p>
               </div>
             <form>
-              <button  type="button" onClick={this.closeModalJack}>Got it</button>
+              {this.props.level !== 3 && <button  type="button" onClick={this.modalJack}>Upgrade Jack</button>}
+              <button  type="button" onClick={this.closeModalJack}>Exit</button>
             </form>
           </Modal>
 
@@ -923,13 +986,12 @@ class Map extends React.Component {
   {/* Coin and Level components */}
           <div style={{
             position: "absolute",
-            width: "226px",
-            height: "50px",
-            left: "1370px",
+            width: "326px",
+            height: "36px",
+            left: "1270px",
             top: "-4px",
             backgroundColor: "#999999",
-            border: "solid 4px #ffffff"
-
+            border: "solid 4px #ffffff",
           }}>
               <Coins coin={this.props.coin}/>
               <Level level={this.props.level}/>
