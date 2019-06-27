@@ -132,13 +132,14 @@ button:active {
 
 .modalSave {
   position: absolute;
-  top: 240px;
-  left: 240px;
-  right: 240px;
-  padding: 10px 20px;
-  height: 300px;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  padding: 10px 80px;
   text-align: center;
   background-color: #003e8f;
+  background-image: url(../map/saveModal.png);
   color: #ffffff;
   font-size: 25px;
   z-index: 3;

@@ -18,6 +18,7 @@ import bush from "./bushextra.png";
 import whiteMark from "./whiteMark.png";
 import deckModal from "./deckModal.png";
 import oceanModal from "./oceanModal.png";
+import saveModal from "./saveModal.png";
 
 //this function gets the tile file to put into the background of that tile
 function getTileSprite(type) {
@@ -81,6 +82,8 @@ class Map extends React.Component {
     showOne: true,
     showTwo: true,   
     showThree: true,
+    showFour: true,
+    showFive: true,
     bedModal: false,
   }
 
@@ -150,6 +153,14 @@ class Map extends React.Component {
       const showThree = this.state.showThree;
       this.setState({ showThree: !showThree })
     }
+    if (this.state.showFour && this.state.InformationTwoModal) {
+      const showFour = this.state.showFour;
+      this.setState({ showFour: !showFour })
+    }
+    if (this.state.showFive && this.state.InformationThreeModal) {
+      const showFive = this.state.showFive;
+      this.setState({ showFive: !showFive })
+    }
   }
 
   //funtion for deciding what to do when Jack lands on a specific position
@@ -188,7 +199,7 @@ class Map extends React.Component {
         this.taTwo();
       }
       //TA Modal Three
-      if (x === 1152 && y === 256 && direction === "NORTH") {
+      if (x === 1152 && y === 192 && direction === "NORTH") {
         this.taThree();
       }
       //information modal One
@@ -613,8 +624,7 @@ class Map extends React.Component {
                 backgroundImage: `url('${whiteMark}')`,
             }}>
           </div>}
-
-  {/* Exclamation mark on tree */}
+  {/* Exclamation mark on mailbox */}
           { this.state.showTwo && 
           <div 
             style={{
@@ -627,8 +637,7 @@ class Map extends React.Component {
                 backgroundImage: `url('${whiteMark}')`,
             }}>
           </div>}
- 
-  {/* Exclamation mark on tree */}
+  {/* Exclamation mark on bird */}
           { this.state.showThree && 
           <div 
             style={{
@@ -641,6 +650,35 @@ class Map extends React.Component {
                 backgroundImage: `url('${whiteMark}')`,
             }}>
           </div>}
+  {/* Exclamation mark on big billboard */}
+          { this.state.showFour && 
+          <div 
+            style={{
+                position: 'absolute',
+                top: '45px',
+                left: '541px',
+                width: "64px",
+                height: "64px",
+                zIndex: 2,
+                backgroundImage: `url('${whiteMark}')`,
+            }}>
+          </div>}
+  {/* Exclamation mark on binoculars */}
+          { this.state.showFive && 
+          <div 
+            style={{
+                position: 'absolute',
+                top: '-4px',
+                left: '1149px',
+                width: "64px",
+                height: "64px",
+                zIndex: 2,
+                backgroundImage: `url('${whiteMark}')`,
+            }}>
+          </div>}
+
+
+
 
   {/* Initial opening modal */}
           <Modal
@@ -698,19 +736,18 @@ class Map extends React.Component {
 
 
 
-
-
+      
   {/* Saving game modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.saveGameModal}
             onRequestClose={this.closeSaveGame}
             className="modalSave"
-            overlayClassName="Overlaytest"
+            overlayClassName="Overlay"
             contentLabel="modalSave"
           >
             <div style={{
-              marginTop: "20px",
+              marginTop: "250px",
               textAlign: "center",
             }}>
               <p>Hi, {this.state.name}.</p>
@@ -734,11 +771,11 @@ class Map extends React.Component {
             isOpen={this.state.afterSaveModal}
             onRequestClose={this.closeAfterSave}
             className="modalSave"
-            overlayClassName="Overlaytest"
+            overlayClassName="Overlay"
             contentLabel="modalSave"
           >
             <div style={{
-              marginTop: "20px",
+              marginTop: "250px",
               textAlign: "center",
             }}>
               <p>Save complete!</p>
