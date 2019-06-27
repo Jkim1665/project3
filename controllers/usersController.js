@@ -19,17 +19,27 @@ module.exports = {
 
   updateUser: function (req, res) {
     db.User
-      .findOneAndUpdate({ email: req.body.email }, req.body, {new: true})
+      .findOneAndUpdate({ email: req.body.email }, req.body, { new: true })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
 
   createUser: function (req, res) {
-    console.log("usersController.js: req.body:");
-    console.log(req.body);
     db.User
       .create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+
+  authenticateUser: function (req, res) {
+    db.User.encryptPassword(req.body.password)
+      .then(function (encryptedValue) {
+        res.json({
+          encryptedPassword: encryptedValue
+        })
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
   }
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import "./LoginPage.css";
 import API from "../../utils/API";
-
 import store from '../../config/store';
 
 class LoginPage extends React.Component {
@@ -23,6 +22,53 @@ class LoginPage extends React.Component {
     // API.findAllUsers()
     //   .then(res => console.log(res.data))
     //   .catch(err => console.log(err));
+
+
+    /* KEVIN TESTING BCRYPT
+    // authenicating
+    API.getSingleUser({ email: this.state.email.toLowerCase() })
+      .then(function (res) {
+        // if user does not exist, create the user
+        if (res.data === null) {
+          API.createUser(state)
+            .then(function (res) {
+              // changes redux store state
+              store.dispatch({
+                type: 'ISLOGGEDIN',
+                payload: {
+                  isLoggedIn: true
+                }
+              })
+            })
+            .catch(err => console.log(err));
+        }
+        // if user does exist, check if password matches
+        else {
+
+          API.authenticateUser({ password: state.password })
+            .then(function (pw) {
+              console.log(res.data.password);
+              console.log(pw.data.encryptedPassword);
+              if (res.data.password === pw.data.encryptedPassword) {
+                // changes redux store state
+                store.dispatch({
+                  type: 'ISLOGGEDIN',
+                  payload: {
+                    isLoggedIn: true
+                  }
+                })
+              }
+            })
+            .catch(errAu => console.log(errAu));
+
+
+          // if (res.data.password === state.password) {
+          // }
+          // else {
+          //   alert("user authentication failed");
+          // }
+        }
+      })*/
 
 
     // authenicating
@@ -50,8 +96,6 @@ class LoginPage extends React.Component {
           }
         }
       })
-
-    
   }
 
   // getSingleUser = (event) => {

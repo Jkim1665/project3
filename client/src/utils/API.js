@@ -19,7 +19,11 @@ export default {
   
   // Creates a new user entry in the db
   createUser: function (userData) {
-    console.log(userData);
     return axios.post("/api/users/newUser", userData);
+  },
+
+  authenticateUser: function(userData) {
+    console.log(userData);
+    return axios.post("/api/users/authUser", userData);
   }
 };
