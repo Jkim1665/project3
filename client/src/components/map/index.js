@@ -280,6 +280,10 @@ class Map extends React.Component {
   /******** Save game modal  *************/
   /****** After Save Modal ********/
   afterSave = () => {
+
+    const coins = store.getState.coin.coin;
+    const level = store.getState.level.level;
+
     this.setState({saveGameModal:false, afterSaveModal: true});
     store.dispatch({
       type: 'MODAL_OPEN',
