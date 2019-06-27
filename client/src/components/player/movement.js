@@ -85,7 +85,7 @@ export default function handleMovement(player) {
 
   function handleKeyDown(e) {
     // e.preventDefault()
-    if(store.getState().modal.isAnyModalOpen === false) {
+    if((store.getState().modal.isAnyModalOpen === false) && (store.getState().isLoggedIn.isLoggedIn === true)) {
       switch(e.keyCode) {
         case 37:
           return attemptMove('WEST')
