@@ -221,10 +221,22 @@ class Map extends React.Component {
             modalJackisOpen: true,
             jackUpgradePossible: `Welcome! Would you like to upgrade Jack to level ${this.props.level + 1}?`
           });
+          store.dispatch({
+            type: 'MODAL_OPEN',
+            payload: {
+              isAnyModalOpen: true,
+            }
+          });
         } else {
           this.setState({
             modalJackisOpen: true,
             jackUpgradePossible: "You've reach the maximum level! You are ready to do whatever you want!"
+          });
+          store.dispatch({
+            type: 'MODAL_OPEN',
+            payload: {
+              isAnyModalOpen: true,
+            }
           });
         }
       }
@@ -479,6 +491,12 @@ class Map extends React.Component {
     } else {
       this.setState({
         jackUpgradePossible: "You've reach the maximum level! You are ready to do whatever you want!"
+      });
+      store.dispatch({
+        type: 'MODAL_OPEN',
+        payload: {
+          isAnyModalOpen: true,
+        }
       });
     }
   }
