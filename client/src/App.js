@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import World from './components/world'
 import LoginPage from './components/LoginPage'
-
+import Sound from "react-sound";
 import { connect } from 'react-redux';
+import mainMusic from "./gameMusic.mp3"
 
 class App extends Component {
 
@@ -16,7 +17,16 @@ class App extends Component {
   render() {
     return (
       <div>
+           <Sound
+              url={mainMusic}
+              playStatus={Sound.status.PLAYING}
+              playFromPosition={0}
+              onLoading={this.handleSongLoading}
+              onPlaying={this.handleSongPlaying}
+              onFinishedPlaying={this.handleSongFinishedPlaying}
+            />
         {this.props.isLoggedIn ? <World /> : <LoginPage />}
+        
       </div>
 
     )

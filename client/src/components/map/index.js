@@ -18,7 +18,7 @@ import bush from "./bushextra.png";
 import whiteMark from "./whiteMark.png";
 import deckModal from "./deckModal.png";
 import oceanModal from "./oceanModal.png";
-import saveModal from "./saveModal.png";
+import Sound from "react-sound";
 
 //this function gets the tile file to put into the background of that tile
 function getTileSprite(type) {
@@ -750,6 +750,14 @@ class Map extends React.Component {
             overlayClassName="Overlay"
             contentLabel="modalSave"
           >
+            {/* <Sound
+              url={enterSound}
+              playStatus={Sound.status.PLAYING}
+              playFromPosition={0}
+              onLoading={this.handleSongLoading}
+              onPlaying={this.handleSongPlaying}
+              onFinishedPlaying={this.handleSongFinishedPlaying}
+            /> */}
             <div style={{
               marginTop: "250px",
               textAlign: "center",
