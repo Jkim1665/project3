@@ -8,12 +8,12 @@ class Level extends React.Component {
       return (
         <div style={{
             position: "absolute",
-            left: "125px",
-            top: "-5px",
+            left: "185px",
+            top: "-2px",
             color: "#008000",
-            fontSize: "12px"
+            fontSize: "9px"
           }}>
-            <h1>Level: {this.props.level}</h1>
+            <h1>Level:{this.props.level}</h1>
           </div>
       );
     }

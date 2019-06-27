@@ -85,23 +85,25 @@ export default function handleMovement(player) {
 
   function handleKeyDown(e) {
     // e.preventDefault()
+    if((store.getState().modal.isAnyModalOpen === false) && (store.getState().isLoggedIn.isLoggedIn === true)) {
+      switch(e.keyCode) {
+        case 37:
+          return attemptMove('WEST')
 
-    switch(e.keyCode) {
-      case 37:
-        return attemptMove('WEST')
+        case 38:
+          return attemptMove('NORTH')
 
-      case 38:
-        return attemptMove('NORTH')
+        case 39:
+          return attemptMove('EAST')
 
-      case 39:
-        return attemptMove('EAST')
+        case 40:
+          return attemptMove('SOUTH')
 
-      case 40:
-        return attemptMove('SOUTH')
+        default:
+          console.log(e.keyCode)
+      }
+    } 
 
-      default:
-        // console.log(e.keyCode)
-    }
   }
 
   window.addEventListener('keydown', (e) => {
