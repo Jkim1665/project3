@@ -4,6 +4,7 @@ import mapReducer from '../components/map/reducer';
 import coinReducer from "../components/Coins/reducer";
 import levelReducer from "../components/Level/reducer";
 import modalReducer from "../components/map/reducerModal";
+import loginPageReducer from "../components/LoginPage/reducer";
 
 //reducer
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   coin: coinReducer,
   level: levelReducer,
   modal: modalReducer,
+  isLoggedIn: loginPageReducer
 })
 
 //store
