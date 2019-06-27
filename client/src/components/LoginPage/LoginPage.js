@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
     event.preventDefault();
     let state = this.state;
 
-    console.log(this.state.name + " " + this.state.email + " " + this.state.password);
+    // console.log(this.state.name + " " + this.state.email + " " + this.state.password);
     // this.props.onSubmit(this.state.name, this.state.email, this.state.password);
 
     // FOR TESTING ONLY
@@ -23,16 +23,16 @@ class LoginPage extends React.Component {
     //   .then(res => console.log(res.data))
     //   .catch(err => console.log(err));
 
-
-    /* KEVIN TESTING BCRYPT
-    // authenicating
+    // authenicating WITH BCRYPT
     API.getSingleUser({ email: this.state.email.toLowerCase() })
       .then(function (res) {
         // if user does not exist, create the user
         if (res.data === null) {
+          console.log(state);
           API.createUser(state)
             .then(function (res) {
               // changes redux store state
+              // TODO: add name and email to store
               store.dispatch({
                 type: 'ISLOGGEDIN',
                 payload: {
@@ -45,12 +45,9 @@ class LoginPage extends React.Component {
         // if user does exist, check if password matches
         else {
 
-          API.authenticateUser({ password: state.password })
-            .then(function (pw) {
-              console.log(res.data.password);
-              console.log(pw.data.encryptedPassword);
-              if (res.data.password === pw.data.encryptedPassword) {
-                // changes redux store state
+          API.authenticateUser(state)
+            .then(function(isValid) {
+              if(isValid.data) {
                 store.dispatch({
                   type: 'ISLOGGEDIN',
                   payload: {
@@ -58,20 +55,16 @@ class LoginPage extends React.Component {
                   }
                 })
               }
-            })
-            .catch(errAu => console.log(errAu));
-
-
-          // if (res.data.password === state.password) {
-          // }
-          // else {
-          //   alert("user authentication failed");
-          // }
+              else {
+                alert("authentication failed");
+              }
+            });
         }
-      })*/
+      })
 
 
-    // authenicating
+    /*
+    // authenicating - THIS WORKS FOR PLAIN TEXT DATA STORAGE
     API.getSingleUser({ email: this.state.email.toLowerCase() })
       .then(function (res) {
         // if user does not exist, create the user
@@ -96,6 +89,7 @@ class LoginPage extends React.Component {
           }
         }
       })
+      */
   }
 
   // getSingleUser = (event) => {
@@ -146,7 +140,7 @@ class LoginPage extends React.Component {
           <div>
             <input type="password" placeholder="Password" value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} />
           </div>
-          <button type="submit">onFormSubmit</button>
+          <button type="submit">Log In</button>
           {/* <button className="uk-button uk-button-secondary uk-button-large" onClick={this.getSingleUser}>getSingleUser</button>
           <button className="uk-button uk-button-secondary uk-button-large" onClick={this.updateSingleUser}>updateSingleUser</button>
           <button className="uk-button uk-button-secondary uk-button-large" onClick={this.createUser}>createUser</button> */}

@@ -17,6 +17,7 @@ router
   .route("/newUser")
   .post(usersController.createUser)
 
+
 router
   .route("/authUser")
   .post(usersController.authenticateUser)
