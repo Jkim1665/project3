@@ -1,7 +1,7 @@
 import React from 'react';
 import Map from '../map';
 import Player from '../player';
-import bgImage1 from './mapGrid.png';
+import bgImage1 from './World.png';
 // import bgImage2 from "./testMap.png";
 import { tiles } from '../../data/maps/1';
 import { tiles2 } from '../../data/maps/2';

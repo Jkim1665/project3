@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 //import player sprite
-import walkSprite from './walker23.png';
+import walkSprite from './jackOriginal.png';
 import handleMovement from './movement';
 
 function Player(props) {
