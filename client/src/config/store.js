@@ -3,6 +3,7 @@ import playerReducer from '../components/player/reducer';
 import mapReducer from '../components/map/reducer';
 import coinReducer from "../components/Coins/reducer";
 import levelReducer from "../components/Level/reducer";
+import modalReducer from "../components/map/reducerModal";
 
 //reducer
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   map: mapReducer,
   coin: coinReducer,
   level: levelReducer,
+  modal: modalReducer,
 })
 
 //store

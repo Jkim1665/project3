@@ -93,9 +93,21 @@ class Map extends React.Component {
   /******** Opening game modal  *************/
   openNow = () => {
     this.setState({openNowModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeOpenNow = () => {
     this.setState({openNowModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /******** Opening game modal  *************/
   
@@ -188,18 +200,42 @@ class Map extends React.Component {
   /******** Save game modal  *************/
   saveGame = () => {
     this.setState({saveGameModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeSaveGame = () => {
     this.setState({saveGameModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /******** Save game modal  *************/
 
   /****** mailbox modal for directions to the game ********/
   openMail = () => {
     this.setState({openMailModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeOpenMail = () => {
     this.setState({openMailModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /****** mailbox modal for directions to the game ********/
 
@@ -208,27 +244,63 @@ class Map extends React.Component {
   /****** TA One Modal ********/
   taOne = () => {
     this.setState({taOneModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeTaOne = () => {
     this.setState({taOneModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /****** TA One Modal ********/
 
   /****** TA Two Modal ********/
   taTwo = () => {
     this.setState({taTwoModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeTaTwo = () => {
     this.setState({taTwoModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /****** TA Two Modal ********/
 
   /****** TA Three Modal ********/
   taThree = () => {
     this.setState({taThreeModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeTaThree = () => {
     this.setState({taThreeModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /****** TA Three Modal ********/
   
@@ -237,45 +309,105 @@ class Map extends React.Component {
   /****** Information One Modal ********/
   informationOne = () => {
     this.setState({InformationOneModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeInformationOne = () => {
     this.setState({InformationOneModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /****** Information One Modal ********/
 
   /****** Information Two Modal ********/
   informationTwo = () => {
     this.setState({InformationTwoModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeInformationTwo = () => {
     this.setState({InformationTwoModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /****** Information Two Modal ********/
   
   /****** Information Three Modal ********/
   informationThree = () => {
     this.setState({InformationThreeModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeInformationThree = () => {
     this.setState({InformationThreeModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /****** Information Three Modal ********/
   
   /****** Information Four Modal ********/
   informationFour = () => {
     this.setState({InformationFourModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeInformationFour = () => {
     this.setState({InformationFourModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /****** Information Four Modal ********/
   
   /****** Information Five Modal ********/
   informationFive = () => {
     this.setState({InformationFiveModal: true});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: true,
+      }
+    });
   }
   closeInformationFive = () => {
     this.setState({InformationFiveModal: false});
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
+    });
   }
   /****** Information Five Modal ********/
   
@@ -287,13 +419,25 @@ class Map extends React.Component {
     if(this.props.coin >= 5) {
       this.setState({
         modalJackisOpen: true,
-        jackUpgradePossible: "Jack has been upgraded!"
+        jackUpgradePossible: `Congratulations! Jack has been upgraded to level ${this.props.level + 1}!`
+      });
+      store.dispatch({
+        type: 'MODAL_OPEN',
+        payload: {
+          isAnyModalOpen: true,
+        }
       });
       this.upgradeJack();
     } else {
       this.setState({
         modalJackisOpen: true,
-        jackUpgradePossible: "Not enough coin!"
+        jackUpgradePossible: "Sorry Jack, you don't have enough coins! You can get more coins by going to Will, Guillermo, or Steven and answering their questions correctly!"
+      });
+      store.dispatch({
+        type: 'MODAL_OPEN',
+        payload: {
+          isAnyModalOpen: true,
+        }
       });
     }
   }
@@ -301,6 +445,12 @@ class Map extends React.Component {
   closeModalJack = () => {
     this.setState({
       modalJackisOpen: false,
+    });
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
     });
   }
    
@@ -332,9 +482,21 @@ class Map extends React.Component {
       this.setState({
         modalFinalisOpen: true,
       });
+      store.dispatch({
+        type: 'MODAL_OPEN',
+        payload: {
+          isAnyModalOpen: true,
+        }
+      });
     } else {
       this.setState({
         modalFinalNotReady: true,
+      });
+      store.dispatch({
+        type: 'MODAL_OPEN',
+        payload: {
+          isAnyModalOpen: true,
+        }
       });
     }
   }
@@ -343,6 +505,12 @@ class Map extends React.Component {
     this.setState({
       modalFinalisOpen: false,
       modalFinalNotReady: false,
+    });
+    store.dispatch({
+      type: 'MODAL_OPEN',
+      payload: {
+        isAnyModalOpen: false,
+      }
     });
   }
    
@@ -452,21 +620,16 @@ class Map extends React.Component {
             ariaHideApp={false}
             isOpen={this.state.saveGameModal}
             onRequestClose={this.closeSaveGame}
-            className="Modal"
-            overlayClassName="Overlay"
-            contentLabel="Modal"
+            className="modalSave"
+            overlayClassName="Overlaytest"
+            contentLabel="modalSave"
           >
             <div style={{
-              position: "absolute",
-              top: "0px",
-              left: "0px",
-              backgroundImage: `url('${billboard}')`,
-              width: '100%',
-              height: '100%',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover"
+              marginTop: "20px",
+              textAlign: "center",
             }}>
-              <p>Save Game Modal</p>
+              <p>Hi, {this.state.name}.</p>
+              <p>Your game is now saved.</p>
             </div>
             <form>
               <button type="button" onClick={this.closeSaveGame} 
@@ -735,9 +898,9 @@ class Map extends React.Component {
               contentLabel="Modal"
           >
 
-            <h2 ref={subtitle => this.subtitle = subtitle}>Final Boss</h2>
+            <h2 ref={subtitle => this.subtitle = subtitle}>Google Interview</h2>
             <div>
-              <p>You are not ready to interview with Alex!</p>
+              <p>Sorry Jack, you are not ready for this interview. Only those who are at level 3 can interview at Google.</p>
               </div>
             <form>
               <button  type="button" onClick={this.closeModalFinal}>Got It</button>
@@ -808,7 +971,7 @@ const mapStateToProps = state => {
     level: state.level.level,
     bgImage: state.map.bgImage,
     name: state.map.name,
-    show: state.map.show,
+    isAnyModalOpen: state.modal.isAnyModalOpen,
   }
 }
 

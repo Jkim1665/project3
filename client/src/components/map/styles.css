@@ -73,6 +73,16 @@ button {
   cursor: pointer;
 }
 
+.buttonQ {
+  height: 50px;
+  width: 90%;
+  background-color: #ffffff;
+  border: 2px solid rgb(130, 184, 255);
+  margin: 10px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
 button:hover {
   background-color: rgb(130, 184, 255);
   border: 2px solid #ffffff;
@@ -107,4 +117,18 @@ button:active {
   bottom: 0;
   background:rgba(0,0,0,0.5);
   z-index: 3;
+}
+
+.modalSave {
+  position: absolute;
+  top: 240px;
+  left: 240px;
+  right: 240px;
+  height: 250px;
+  text-align: center;
+  background-color: #127c35;
+  color: #ffffff;
+  font-size: 40px;
+  z-index: 3;
+  vertical-align: center;
 }
