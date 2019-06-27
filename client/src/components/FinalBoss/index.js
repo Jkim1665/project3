@@ -100,12 +100,12 @@ class FinalBoss extends React.Component {
                         <p>{this.state.question}</p>
                     </div>
                     <form>
-                    <button type="button" onClick={this.answeredQuestion} value={this.state.answerOne}>{this.state.answerOne}</button>
-                    <button type="button" onClick={this.answeredQuestion} value={this.state.answerTwo}>{this.state.answerTwo}</button>
-                    <button type="button" onClick={this.answeredQuestion} value={this.state.answerThree}>{this.state.answerThree}</button>
-                    <button type="button" onClick={this.answeredQuestion} value={this.state.answerFour}>{this.state.answerFour}</button>
+                        {this.state.answerOne && <button type="button" className="buttonQ" onClick={this.answeredQuestion} value={this.state.answerOne}>{this.state.answerOne}</button>}
+                        {this.state.answerTwo && <button type="button" className="buttonQ" onClick={this.answeredQuestion} value={this.state.answerTwo}>{this.state.answerTwo}</button>}
+                        {this.state.answerThree && <button type="button" className="buttonQ" onClick={this.answeredQuestion} value={this.state.answerThree}>{this.state.answerThree}</button>}
+                        {this.state.answerFour && <button type="button" className="buttonQ" onClick={this.answeredQuestion} value={this.state.answerFour}>{this.state.answerFour}</button>}
                     </form>
-                </div>
+            </div>
             </>
         )
     }
