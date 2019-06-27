@@ -1,30 +1,33 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
+import World from './components/world'
+import LoginPage from './components/LoginPage'
 
-import BackgroundDungeon from "./Components/BackgroundDungeon/index"
-
-import "./App.css";
-import LoginPage from "./Components/LoginPage";
+import { connect } from 'react-redux';
 
 class App extends Component {
 
+  // func to check db/authentication
+  // changes this.state.isLoggedIn
 
-  onSearchSubmit(name,email,password) {
-    console.log(name,email,password)
-}
-
-
-
-
+  onFormSubmit(name, email, password) {
+    console.log(name, email, password)
+  }
 
   render() {
     return (
-      <LoginPage onSubmit = {this.onSearchSubmit}>
-      <BackgroundDungeon/>
-          </LoginPage>
-    
-   
-    );
+      <div>
+        {this.props.isLoggedIn ? <World /> : <LoginPage />}
+      </div>
+
+    )
   }
 }
 
-export default App;
+
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.isLoggedIn.isLoggedIn
+  }
+}
+
+export default connect(mapStateToProps)(App);
