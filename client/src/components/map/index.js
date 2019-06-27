@@ -965,6 +965,7 @@ class Map extends React.Component {
 const mapStateToProps = state => {
   return {
     //this is grabbing the tiles inside map state
+    //you can also grab state from store by: store.getState().map.tiles
     tiles: state.map.tiles,
     //this you can use by using "this.props.tiles"
     coin: state.coin.coin,
