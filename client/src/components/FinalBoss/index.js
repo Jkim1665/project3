@@ -6,14 +6,16 @@ class FinalBoss extends React.Component {
 
     state ={
         questions: [
-            {q: "The answer is answerOne?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerOne"},
-            {q: "The answer is answerTwo?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerTwo"},
-            {q: "The answer is answerThree?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerThree"},
-            {q: "The answer is answerFour?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerFour"},
-            {q: "The answer is answerFive?", a1: "answerFive", a2: "answerTwo", a3: "answerThree", a4: "answerFour", c: "answerFive"},
-            {q: "The answer is answerSix?", a1: "answerOne", a2: "answerSix", a3: "answerThree", a4: "answerFour", c: "answerSix"},
-            {q: "The answer is answerSeven?", a1: "answerOne", a2: "answerTwo", a3: "answerSeven", a4: "answerFour", c: "answerSeven"},
-            {q: "The answer is answerEight?", a1: "answerOne", a2: "answerTwo", a3: "answerThree", a4: "answerEight", c: "answerEight"},
+            {q: "An array must contain only strings.", a1: "True", a2: "False", a3: "", a4: "", c: "False"},
+            {q: "Which of these is NOT a database function?", a1: "Delete", a2: "Update", a3: "Remove", a4: "Create", c: "Remove"},
+            {q: "Which loop is BEST used to iterate through a tree data structure?", a1: "while loop", a2: "for loop", a3: "tree loop", a4: "for-each loop", c: "while loop"},
+            {q: "What does ORM stand for?", a1: "Object Relational Model", a2: "Object Rest Mapping", a3: "Option Relation Model", a4: "Object Relational Mapping", c: "Object Relational Mapping"},
+            {q: "Using git, how do you create a new branch?", a1: "git new <newbranch>", a2: "git branch <newbranch>", a3: "git b <newbranch>", a4: "git newB <newbranch>", c: "git branch <newbranch>"},
+            {q: "What does === mean in JavaScript?", a1: "assignment operator", a2: "strict equality", a3: "does not equal", a4: "loose equality", c: "strict equality"},
+            {q: "Which of these are NOT one of the four pillars of object oriented programming?", a1: "Abstraction", a2: "Structure", a3: "Inheritance", a4: "Polymorphism", c: "Structure"},
+            {q: "What key word is used to choose which database to use?", a1: "select", a2: "use", a3: "switch", a4: "database", c: "use"},
+            {q: "What is ReactJS?", a1: "Server side framework", a2: "User-interface framework", a3: "A library for building UI", a4: "A database system", c: "A library for building UI"},
+            {q: "What http method would you use to update an entry in a database?", a1: "PUT", a2: "POST", a3: "UPDATE", a4: "REVISE", c: "PUT"},
         ],
         question: "",
         answerOne: "",
@@ -80,7 +82,7 @@ class FinalBoss extends React.Component {
                 intro: 2,
             });
         } else {
-            if(this.answersCorrect >= 8) {
+            if(this.state.answersCorrect >= 8) {
                 this.setState({
                     question: "You passed the interview! Welcome to Google!",
                     questionNum: "Congratulations!",
@@ -119,7 +121,7 @@ class FinalBoss extends React.Component {
 
 
     endGame = () => {
-        if(this.answersCorrect >= 8) {
+        if(this.state.answersCorrect >= 8) {
             window.location.reload();
         } else {
             store.dispatch({
@@ -137,7 +139,9 @@ class FinalBoss extends React.Component {
         return (
             <>
                 <div>
-                    <h2>{this.state.questionNum}</h2>
+                    <h2 style={{
+                        marginTop: "100px",
+                    }}>{this.state.questionNum}</h2>
                     <div>
                         <p>{this.state.question}</p>
                         <p>{this.state.finalScore}</p>

@@ -18,7 +18,7 @@ class App extends Component {
               url={mainMusic}
               playStatus={Sound.status.PLAYING}
               playFromPosition={0}
-              volume={1}
+              volume={10}
               loop={true}
             />
         {this.props.isLoggedIn ? <World /> : <LoginPage />}

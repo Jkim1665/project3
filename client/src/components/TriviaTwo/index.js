@@ -86,7 +86,7 @@ class TriviaTwo extends React.Component {
             });
         } else {
             this.setState({
-                question: "You have completed this set of questions. If you haven't yet, make sure to visit Will and Guillermo to practice more coding questions! You can find Guillermo at the lemonade stand, and Will should be in the woods.",
+                question: "You have completed this set of questions. If you haven't yet, make sure to visit Will and Guillermo to practice more coding questions! You can find Guillermo in the building next door, and Will should be in the woods.",
                 questionNum: "Good job!",
                 answerOne: "",
                 answerTwo: "",

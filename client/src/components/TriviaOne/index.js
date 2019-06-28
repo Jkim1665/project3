@@ -8,15 +8,15 @@ class TriviaOne extends React.Component {
     state ={
         questions: [
             {q: "Is JavaScript a case-sensitive language?", a1: "Yes", a2: "No", a3: "", a4: "", c: "Yes"},
-            {q: "How can you get the total number of arguments passed to a function?", a1: "args.length", a2: "arguments.length", a3: "Both of the above", a4: "None of the above", c: "arguments.length"},
+            {q: "How can you get the total number of arguments passed to a function?", a1: "Use args.length", a2: "Use arguments.length", a3: "Both of the above", a4: "None of the above", c: "Use args.length"},
             {q: "Which built-in method returns the length of the string?", a1: "length()", a2: "size()", a3: "index()", a4: "number()", c: "length()"},
             {q: "Which built-in method reverses the order of the elements of an array?", a1: "changeOrder(order)", a2: "reverse()", a3: "sort(order)", a4: "backwards()", c: "reverse()"},
             {q: "Which of the following function of Number object returns the number's value?", a1: "toString()", a2: "valueOf()", a3: "toLocaleString()", a4: "toPrecision()", c: "valueOf()"},
             {q: "Which of the following function of String object returns the index within the calling String object of the first occurrence of the specified value?", a1: "substr()", a2: "search()", a3: "lastIndexOf()", a4: "indexOf()", c: "indexOf()"},
             {q: "Which of the following function of String object returns the calling string value converted to lower case while respecting the current locale?", a1: "toLocaleLowerCase()", a2: "toLowerCase()", a3: "toString()", a4: "subString()", c: "toLocaleLowerCase()"},
-            {q: "Which of the following function of String object creates an HTML hypertext link that requests another URL?", a1: "link()", a2: "sub()", a3: "url()", a4: "small()", c: "link()"},
+            {q: "Which of the following function of String object creates an HTML hypertext link that requests another URL?", a1: "link()", a2: "sub()", a3: "hyperlink()", a4: "small()", c: "link()"},
             {q: "Which of the following function of Array object creates a new array with all of the elements of this array for which the provided filtering function returns true?", a1: "concat()", a2: "every()", a3: "filter()", a4: "some()", c: "filter()"},
-            {q: "Which of the following function of Array object returns true if at least one element in this array satisfies the provided testing function??", a1: "reverse()", a2: "shift()", a3: "slice()", a4: "some()", c: "some()"},
+            {q: "Which of the following function of Array object returns true if at least one element in this array satisfies the provided testing function?", a1: "reverse()", a2: "shift()", a3: "slice()", a4: "some()", c: "some()"},
         ],
         question: "",
         answerOne: "",
@@ -79,7 +79,7 @@ class TriviaOne extends React.Component {
             });
         } else {
             this.setState({
-                question: "You have completed this set of questions. Make sure to visit Steven and Guillermo to practice more coding questions! Steven should be at the school, and Guillermo is at the lemonade stand. Also, there are hints around the map so make sure to look for them!",
+                question: "You have completed this set of questions. Make sure to visit Steven and Guillermo to practice more coding questions! Steven and Guillermo are both at the east end of the map in seperate buildings. Also, there are hints around the map so make sure to look for them!",
                 questionNum: "Good job!",
                 answerOne: "",
                 answerTwo: "",

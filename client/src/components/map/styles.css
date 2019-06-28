@@ -39,14 +39,16 @@
   left: 40px;
   right: 40px;
   bottom: 40px;
-  padding: 10px 20px;
-  background-color: rgb(65, 65, 65);
+  padding: 50px 180px;
+  text-align: center;
+  background-color: #634329;
+  background-image: url(./storeModal.png);
+  background-position: center;
+  background-size: cover;
   text-align: center;
   color: #ffffff;
   font-size: 25px;
   z-index: 3;
-  background-image: url(./storeModal.png);
-  background-position: center;
   font-family: 'Press Start 2P', cursive;
   line-height: 1.6;
 }
@@ -74,13 +76,14 @@
   right: 40px;
   bottom: 40px;
   padding: 10px 20px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(224, 224, 224);
+  background-image: url(./paper.jpg);
+  background-position: center;
+  background-size: cover;
   text-align: center;
   color: #2c2c2c;
   font-size: 25px;
   z-index: 3;
-  background-image: url(./paper.jpg);
-  background-position: center;
   font-family: 'Press Start 2P', cursive;
   line-height: 1.6;
 }
@@ -91,10 +94,11 @@
   left: 40px;
   right: 40px;
   bottom: 40px;
-  padding: 20px 80px;
+  padding: 70px 80px;
   background-color: rgb(255, 255, 255);
   background-image: url(../map/loginOceanBackground.png);
   background-position-x: center;
+  background-size: cover;
   text-align: center;
   color: #000000;
   font-size: 25px;
@@ -155,13 +159,30 @@ button:active {
 }
 
 
-
-.Modaltest {
+.ModalDog {
   position: absolute;
-  top: 240px;
+  top: 100px;
   left: 240px;
   right: 240px;
-  height: 250px;
+  height: 100px;
+  margin: 300px 300px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  color: #ffffff;
+  font-size: 25px;
+  z-index: 3;
+  vertical-align: center;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
+}
+
+
+.ModalOpening {
+  position: absolute;
+  top: 100px;
+  left: 240px;
+  right: 240px;
+  height: 300px;
   padding: 10px 20px;
   text-align: center;
   background-color: #684729;
@@ -194,6 +215,7 @@ button:active {
   background-color: #003e8f;
   background-image: url(../map/saveModal.png);
   background-position-x: center;
+  background-size: cover;
   color: #ffffff;
   font-size: 22px;
   z-index: 3;
@@ -208,7 +230,7 @@ button:active {
   left: 40px;
   right: 40px;
   bottom: 40px;
-  padding: 200px 80px;
+  padding: 300px 80px;
   text-align: center;
   background-color: #634329;
   background-image: url(./storeModal.png);
