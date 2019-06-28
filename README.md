@@ -1,29 +1,26 @@
-# Create React Express App
+# J.A.C.K
+## A unique interactive learning experience
 
-## About This Boilerplate
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
+A quiz based RPG, will you get the job?
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
+Visit our APP
 
-## Starting the app locally
+## Deployment (Heroku LINK)
 
-Start by installing front and backend dependencies. While in this directory, run the following command:
-
-```
-npm install
-```
-
-This should install node modules within the server and the client folder.
-
-After both installations complete, run the following command in your terminal:
 
 ```
-npm start
+Our premise
 ```
 
-Your app should now be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
+Learning doesn't have to be boring, with J.A.C.K the user can explore an educational landscape while "leveling" up not only thier character , but their knowledge.
 
-## Deployment (Heroku)
 
-To deploy, simply add and commit your changes, and push to Heroku. As is, the NPM scripts should take care of the rest.
+
+```
+
+```
+
+
+## Start the app Locally with NPM START / NPM INSTALL
+
