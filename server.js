@@ -21,7 +21,7 @@ mongoose.set('useFindAndModify', false);
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3db");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://user:ab25cK156@ds245387.mlab.com:45387/heroku_r3rwx248");
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
