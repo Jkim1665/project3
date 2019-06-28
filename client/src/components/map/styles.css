@@ -136,12 +136,13 @@ button:active {
   left: 40px;
   right: 40px;
   bottom: 40px;
-  padding: 10px 80px;
+  padding: 10px 90px;
   text-align: center;
   background-color: #003e8f;
   background-image: url(../map/saveModal.png);
+  background-position-x: center;
   color: #ffffff;
-  font-size: 25px;
+  font-size: 22px;
   z-index: 3;
   vertical-align: center;
   font-family: 'Press Start 2P', cursive;

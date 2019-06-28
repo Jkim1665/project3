@@ -746,16 +746,8 @@ class Map extends React.Component {
             overlayClassName="Overlay"
             contentLabel="modalSave"
           >
-            {/* <Sound
-              url={enterSound}
-              playStatus={Sound.status.PLAYING}
-              playFromPosition={0}
-              onLoading={this.handleSongLoading}
-              onPlaying={this.handleSongPlaying}
-              onFinishedPlaying={this.handleSongFinishedPlaying}
-            /> */}
             <div style={{
-              marginTop: "250px",
+              marginTop: "200px",
               textAlign: "center",
             }}>
               <p>Hi, {this.state.name}.</p>
@@ -783,7 +775,7 @@ class Map extends React.Component {
             contentLabel="modalSave"
           >
             <div style={{
-              marginTop: "250px",
+              marginTop: "200px",
               textAlign: "center",
             }}>
               <p>Save complete!</p>
