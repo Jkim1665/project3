@@ -711,7 +711,7 @@ class Map extends React.Component {
               marginTop: "20px",
               textAlign: "center",
             }}>
-              <p>Hi, {this.state.name}.</p>
+              <p>Hi, {store.getState().isLoggedIn.name}.</p>
               <p>Remember to check your mail first!</p>
             </div>
             <form>
@@ -764,16 +764,8 @@ class Map extends React.Component {
             overlayClassName="Overlay"
             contentLabel="modalSave"
           >
-            {/* <Sound
-              url={enterSound}
-              playStatus={Sound.status.PLAYING}
-              playFromPosition={0}
-              onLoading={this.handleSongLoading}
-              onPlaying={this.handleSongPlaying}
-              onFinishedPlaying={this.handleSongFinishedPlaying}
-            /> */}
             <div style={{
-              marginTop: "250px",
+              marginTop: "200px",
               textAlign: "center",
             }}>
               <p>Hi, {this.state.name}.</p>
@@ -801,7 +793,7 @@ class Map extends React.Component {
             contentLabel="modalSave"
           >
             <div style={{
-              marginTop: "250px",
+              marginTop: "200px",
               textAlign: "center",
             }}>
               <p>Save complete!</p>
@@ -865,9 +857,9 @@ class Map extends React.Component {
             ariaHideApp={false}
             isOpen={this.state.taTwoModal}
             onRequestClose={this.closeTaTwo}
-            className="Modal"
+            className="ModalTaTwo"
             overlayClassName="Overlay"
-            contentLabel="Modal"
+            contentLabel="ModalTaTwo"
           >
             <TriviaTwo increaseCoins={this.increaseCoins} />
             <br /><br />
@@ -880,9 +872,9 @@ class Map extends React.Component {
             ariaHideApp={false}
             isOpen={this.state.taThreeModal}
             onRequestClose={this.closeTaThree}
-            className="Modal"
+            className="ModalTaTwo"
             overlayClassName="Overlay"
-            contentLabel="Modal"
+            contentLabel="ModalTaTwo"
           >
             <TriviaThree increaseCoins={this.increaseCoins} />
             <br /><br />
@@ -1037,9 +1029,9 @@ class Map extends React.Component {
             ariaHideApp={false}
             isOpen={this.state.modalFinalNotReady}
             onRequestClose={this.closeModalFinal}
-            className="Modal"
+            className="ModalFinal"
             overlayClassName="OverlayFinal"
-            contentLabel="Modal"
+            contentLabel="ModalFinal"
           >
 
             <h2 ref={subtitle => this.subtitle = subtitle}>Google Interview</h2>
@@ -1055,9 +1047,9 @@ class Map extends React.Component {
             ariaHideApp={false}
             isOpen={this.state.modalFinalisOpen}
             onRequestClose={this.closeModalFinal}
-            className="Modal"
+            className="ModalFinal"
             overlayClassName="OverlayFinal"
-            contentLabel="Modal"
+            contentLabel="ModalFinal"
           >
             <FinalBoss />
             <button type="button" onClick={this.closeModalFinal}>Close</button>

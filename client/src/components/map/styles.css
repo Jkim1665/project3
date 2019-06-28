@@ -33,6 +33,24 @@
   line-height: 1.6;
 }
 
+.ModalTaTwo {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  padding: 10px 20px;
+  background-color: rgb(65, 65, 65);
+  text-align: center;
+  color: #ffffff;
+  font-size: 25px;
+  z-index: 3;
+  background-image: url(./storeModal.png);
+  background-position: center;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
+}
+
 .Modal {
   position: absolute;
   top: 40px;
@@ -49,6 +67,23 @@
   line-height: 1.6;
 }
 
+.ModalFinal {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  padding: 20px 80px;
+  background-color: rgb(65, 65, 65);
+  background-image: url(../map/loginOceanBackground.png);
+  background-position-x: center;
+  text-align: center;
+  color: #ffffff;
+  font-size: 25px;
+  z-index: 3;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
+}
 
 .Overlay {
   position: fixed;
@@ -136,12 +171,13 @@ button:active {
   left: 40px;
   right: 40px;
   bottom: 40px;
-  padding: 10px 80px;
+  padding: 10px 90px;
   text-align: center;
   background-color: #003e8f;
   background-image: url(../map/saveModal.png);
+  background-position-x: center;
   color: #ffffff;
-  font-size: 25px;
+  font-size: 22px;
   z-index: 3;
   vertical-align: center;
   font-family: 'Press Start 2P', cursive;
@@ -150,14 +186,17 @@ button:active {
 
 .modalUpgrade {
   position: absolute;
-  top: 240px;
-  left: 240px;
-  right: 240px;
-  padding: 10px 20px;
-  height: 350px;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  padding: 200px 80px;
   text-align: center;
-  background-color: #ffffff;
-  color: #333333;
+  background-color: #634329;
+  background-image: url(./storeModal.png);
+  background-position: center;
+  background-size: cover;
+  color: #ffffff;
   font-size: 25px;
   z-index: 3;
   vertical-align: center;
