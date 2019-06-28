@@ -19,18 +19,19 @@ import whiteMark from "./whiteMark.png";
 import deckModal from "./deckModal.png";
 import oceanModal from "./oceanModal.png";
 import Sound from "react-sound";
+import API from "../../utils/API";
 
 //this function gets the tile file to put into the background of that tile
 function getTileSprite(type) {
-  switch(type) {
+  switch (type) {
     case 0:
-        return 'blank';
+      return 'blank';
     case 1:
-        return 'blank';
+      return 'blank';
     case 5:
-        return 'blank';
+      return 'blank';
     case 6:
-        return 'blank';
+      return 'blank';
     default:
 
   }
@@ -53,9 +54,9 @@ function MapRow(props) {
       height: SPRITE_SIZE,
     }}
   >
-  {
-    props.tiles.map( tile => <MapTile tile={tile} /> )
-  }
+    {
+      props.tiles.map(tile => <MapTile tile={tile} />)
+    }
   </div>
 }
 
@@ -80,14 +81,14 @@ class Map extends React.Component {
     openNowModal: false,
     name: "Jack",
     showOne: true,
-    showTwo: true,   
+    showTwo: true,
     showThree: true,
     showFour: true,
     showFive: true,
     bedModal: false,
   }
 
-  
+
   // this will grab the player's location each time a key is pressed
   componentDidMount() {
     document.addEventListener("keyup", (e) => {
@@ -98,7 +99,7 @@ class Map extends React.Component {
 
   /******** Opening game modal  *************/
   openNow = () => {
-    this.setState({openNowModal: true});
+    this.setState({ openNowModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -107,7 +108,7 @@ class Map extends React.Component {
     });
   }
   closeOpenNow = () => {
-    this.setState({openNowModal: false});
+    this.setState({ openNowModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -118,7 +119,7 @@ class Map extends React.Component {
   /******** Opening game modal  *************/
   /******** Bed modal  *************/
   bed = () => {
-    this.setState({bedModal: true});
+    this.setState({ bedModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -127,7 +128,7 @@ class Map extends React.Component {
     });
   }
   closeBed = () => {
-    this.setState({bedModal: false});
+    this.setState({ bedModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -137,7 +138,7 @@ class Map extends React.Component {
   }
   /******** Bed modal  *************/
 
-  
+
   //code for exclamation marks
   toggleExclamation = () => {
 
@@ -176,7 +177,7 @@ class Map extends React.Component {
     const y = position[1];
 
     //if player lands on position with these coordinates, run modal questions
-    if(enter === 13){
+    if (enter === 13) {
       //modal for saving states to database
       if ((x === 192 && y === 64 && direction === "EAST") || (x === 256 && y === 128 && direction === "NORTH")) {
         this.saveGame();
@@ -227,7 +228,7 @@ class Map extends React.Component {
       }
       //upgrade Jack
       if (x === 832 && y === 64 && direction === "NORTH") {
-        if(this.props.level < 3){
+        if (this.props.level < 3) {
           this.setState({
             modalJackisOpen: true,
             jackUpgradePossible: `Welcome! Would you like to upgrade Jack to level ${this.props.level + 1}?`
@@ -260,7 +261,7 @@ class Map extends React.Component {
 
   /******** Save game modal  *************/
   saveGame = () => {
-    this.setState({saveGameModal: true});
+    this.setState({ saveGameModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -269,7 +270,7 @@ class Map extends React.Component {
     });
   }
   closeSaveGame = () => {
-    this.setState({saveGameModal: false});
+    this.setState({ saveGameModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -280,16 +281,33 @@ class Map extends React.Component {
   /******** Save game modal  *************/
   /****** After Save Modal ********/
   afterSave = () => {
-    this.setState({saveGameModal:false, afterSaveModal: true});
+
+    this.setState({ saveGameModal: false, afterSaveModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
         isAnyModalOpen: true,
       }
     });
+
+    const coins = store.getState().coin.coin;
+    const level = store.getState().level.level;
+    const email = store.getState().isLoggedIn.email;
+
+    const userData = {
+      email: email,
+      coins: coins,
+      level: level
+    }
+
+    API.updateSingleUser(userData)
+      .then(function (res) {
+        console.log(res);
+      });
+
   }
   closeAfterSave = () => {
-    this.setState({afterSaveModal: false});
+    this.setState({ afterSaveModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -302,7 +320,7 @@ class Map extends React.Component {
 
   /****** mailbox modal for directions to the game ********/
   openMail = () => {
-    this.setState({openMailModal: true});
+    this.setState({ openMailModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -311,7 +329,7 @@ class Map extends React.Component {
     });
   }
   closeOpenMail = () => {
-    this.setState({openMailModal: false});
+    this.setState({ openMailModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -325,7 +343,7 @@ class Map extends React.Component {
 
   /****** TA One Modal ********/
   taOne = () => {
-    this.setState({taOneModal: true});
+    this.setState({ taOneModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -334,7 +352,7 @@ class Map extends React.Component {
     });
   }
   closeTaOne = () => {
-    this.setState({taOneModal: false});
+    this.setState({ taOneModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -346,7 +364,7 @@ class Map extends React.Component {
 
   /****** TA Two Modal ********/
   taTwo = () => {
-    this.setState({taTwoModal: true});
+    this.setState({ taTwoModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -355,7 +373,7 @@ class Map extends React.Component {
     });
   }
   closeTaTwo = () => {
-    this.setState({taTwoModal: false});
+    this.setState({ taTwoModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -367,7 +385,7 @@ class Map extends React.Component {
 
   /****** TA Three Modal ********/
   taThree = () => {
-    this.setState({taThreeModal: true});
+    this.setState({ taThreeModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -376,7 +394,7 @@ class Map extends React.Component {
     });
   }
   closeTaThree = () => {
-    this.setState({taThreeModal: false});
+    this.setState({ taThreeModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -385,12 +403,12 @@ class Map extends React.Component {
     });
   }
   /****** TA Three Modal ********/
-  
+
 
 
   /****** Information One Modal ********/
   informationOne = () => {
-    this.setState({InformationOneModal: true});
+    this.setState({ InformationOneModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -399,7 +417,7 @@ class Map extends React.Component {
     });
   }
   closeInformationOne = () => {
-    this.setState({InformationOneModal: false});
+    this.setState({ InformationOneModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -411,7 +429,7 @@ class Map extends React.Component {
 
   /****** Information Two Modal ********/
   informationTwo = () => {
-    this.setState({InformationTwoModal: true});
+    this.setState({ InformationTwoModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -420,7 +438,7 @@ class Map extends React.Component {
     });
   }
   closeInformationTwo = () => {
-    this.setState({InformationTwoModal: false});
+    this.setState({ InformationTwoModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -429,10 +447,10 @@ class Map extends React.Component {
     });
   }
   /****** Information Two Modal ********/
-  
+
   /****** Information Three Modal ********/
   informationThree = () => {
-    this.setState({InformationThreeModal: true});
+    this.setState({ InformationThreeModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -441,7 +459,7 @@ class Map extends React.Component {
     });
   }
   closeInformationThree = () => {
-    this.setState({InformationThreeModal: false});
+    this.setState({ InformationThreeModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -450,10 +468,10 @@ class Map extends React.Component {
     });
   }
   /****** Information Three Modal ********/
-  
+
   /****** Information Five Modal ********/
   informationFive = () => {
-    this.setState({InformationFiveModal: true});
+    this.setState({ InformationFiveModal: true });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -462,7 +480,7 @@ class Map extends React.Component {
     });
   }
   closeInformationFive = () => {
-    this.setState({InformationFiveModal: false});
+    this.setState({ InformationFiveModal: false });
     store.dispatch({
       type: 'MODAL_OPEN',
       payload: {
@@ -471,13 +489,13 @@ class Map extends React.Component {
     });
   }
   /****** Information Five Modal ********/
-  
+
 
 
   /********** Upgrade Jack ********/
-   modalJack = () => {
-    if(this.props.level < 3) {
-      if(this.props.coin >= 5) {
+  modalJack = () => {
+    if (this.props.level < 3) {
+      if (this.props.coin >= 5) {
         this.setState({
           jackUpgradePossible: `Congratulations! Jack has been upgraded to level ${this.props.level + 1}!`
         });
@@ -523,32 +541,32 @@ class Map extends React.Component {
       }
     });
   }
-   
+
   upgradeJack = () => {
 
-      let newCoins = this.props.coin - 5;
-      let newLevel = this.props.level + 1;
+    let newCoins = this.props.coin - 5;
+    let newLevel = this.props.level + 1;
 
-      store.dispatch({
-        type: 'UPGRADE_PLAYER',
-        payload: {
-          level: newLevel,
-        }
-      })
-      store.dispatch({
-        type: 'ADD_COIN',
-        payload: {
-          coin: newCoins,
-        }
-      })
-   
+    store.dispatch({
+      type: 'UPGRADE_PLAYER',
+      payload: {
+        level: newLevel,
+      }
+    })
+    store.dispatch({
+      type: 'ADD_COIN',
+      payload: {
+        coin: newCoins,
+      }
+    })
+
   }
   /********** Upgrade Jack ********/
 
   /********** Final Interview ********/
   modalFinal = () => {
 
-    if(this.props.level >= 3) {
+    if (this.props.level >= 3) {
       this.setState({
         modalFinalisOpen: true,
       });
@@ -583,9 +601,9 @@ class Map extends React.Component {
       }
     });
   }
-   
+
   finalInterview = () => {
-    
+
   }
   /********** Final Interview ********/
 
@@ -594,27 +612,27 @@ class Map extends React.Component {
 
   render() {
     return (
-        <>
-        
-          <div
+      <>
+
+        <div
           style={{
-              position: 'relative',
-              top: '0px',
-              left: '0px',
-              width: '1600px',
-              height: '768px',
-              border: '4px solid white',
-              backgroundImage: `url('${this.props.bgImage}')`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover"
+            position: 'relative',
+            top: '0px',
+            left: '0px',
+            width: '1600px',
+            height: '768px',
+            border: '4px solid white',
+            backgroundImage: `url('${this.props.bgImage}')`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover"
           }}
-          >
+        >
 
 
-  {/* Exclamation mark on tree */}
-          { this.state.showOne && 
-          <div 
-            style={{
+          {/* Exclamation mark on tree */}
+          {this.state.showOne &&
+            <div
+              style={{
                 position: 'absolute',
                 top: '490px',
                 left: '375px',
@@ -622,12 +640,12 @@ class Map extends React.Component {
                 height: "64px",
                 zIndex: 2,
                 backgroundImage: `url('${whiteMark}')`,
-            }}>
-          </div>}
-  {/* Exclamation mark on mailbox */}
-          { this.state.showTwo && 
-          <div 
-            style={{
+              }}>
+            </div>}
+          {/* Exclamation mark on mailbox */}
+          {this.state.showTwo &&
+            <div
+              style={{
                 position: 'absolute',
                 top: '180px',
                 left: '260px',
@@ -635,12 +653,12 @@ class Map extends React.Component {
                 height: "64px",
                 zIndex: 2,
                 backgroundImage: `url('${whiteMark}')`,
-            }}>
-          </div>}
-  {/* Exclamation mark on bird */}
-          { this.state.showThree && 
-          <div 
-            style={{
+              }}>
+            </div>}
+          {/* Exclamation mark on bird */}
+          {this.state.showThree &&
+            <div
+              style={{
                 position: 'absolute',
                 top: '450px',
                 left: '1021px',
@@ -648,12 +666,12 @@ class Map extends React.Component {
                 height: "64px",
                 zIndex: 2,
                 backgroundImage: `url('${whiteMark}')`,
-            }}>
-          </div>}
-  {/* Exclamation mark on big billboard */}
-          { this.state.showFour && 
-          <div 
-            style={{
+              }}>
+            </div>}
+          {/* Exclamation mark on big billboard */}
+          {this.state.showFour &&
+            <div
+              style={{
                 position: 'absolute',
                 top: '45px',
                 left: '541px',
@@ -661,12 +679,12 @@ class Map extends React.Component {
                 height: "64px",
                 zIndex: 2,
                 backgroundImage: `url('${whiteMark}')`,
-            }}>
-          </div>}
-  {/* Exclamation mark on binoculars */}
-          { this.state.showFive && 
-          <div 
-            style={{
+              }}>
+            </div>}
+          {/* Exclamation mark on binoculars */}
+          {this.state.showFive &&
+            <div
+              style={{
                 position: 'absolute',
                 top: '-4px',
                 left: '1149px',
@@ -674,13 +692,13 @@ class Map extends React.Component {
                 height: "64px",
                 zIndex: 2,
                 backgroundImage: `url('${whiteMark}')`,
-            }}>
-          </div>}
+              }}>
+            </div>}
 
 
 
 
-  {/* Initial opening modal */}
+          {/* Initial opening modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.openNowModal}
@@ -697,7 +715,7 @@ class Map extends React.Component {
               <p>Remember to check your mail first!</p>
             </div>
             <form>
-              <button type="button" onClick={this.closeOpenNow} 
+              <button type="button" onClick={this.closeOpenNow}
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -706,7 +724,7 @@ class Map extends React.Component {
                 }}>X</button>
             </form>
           </Modal>
-  {/* Bed modal */}
+          {/* Bed modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.bedModal}
@@ -723,8 +741,8 @@ class Map extends React.Component {
               <p>Go out there and get your dream job!</p>
             </div>
             <form>
-              <button  type="button" onClick={this.closeBed}>Fine...</button>
-              <button type="button" onClick={this.closeBed} 
+              <button type="button" onClick={this.closeBed}>Fine...</button>
+              <button type="button" onClick={this.closeBed}
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -736,8 +754,8 @@ class Map extends React.Component {
 
 
 
-      
-  {/* Saving game modal */}
+
+          {/* Saving game modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.saveGameModal}
@@ -762,9 +780,9 @@ class Map extends React.Component {
               <p>Would you like to save your progress?</p>
             </div>
             <form>
-            <button  type="button" onClick={this.afterSave}>Save Game</button>
-            <button  type="button" onClick={this.closeSaveGame}>Don't Save</button>
-              <button type="button" onClick={this.closeSaveGame} 
+              <button type="button" onClick={this.afterSave}>Save Game</button>
+              <button type="button" onClick={this.closeSaveGame}>Don't Save</button>
+              <button type="button" onClick={this.closeSaveGame}
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -773,7 +791,7 @@ class Map extends React.Component {
                 }}>X</button>
             </form>
           </Modal>
-  {/* After saving modal */}
+          {/* After saving modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.afterSaveModal}
@@ -789,8 +807,8 @@ class Map extends React.Component {
               <p>Save complete!</p>
             </div>
             <form>
-            <button  type="button" onClick={this.closeAfterSave}>Close</button>
-              <button type="button" onClick={this.closeAfterSave} 
+              <button type="button" onClick={this.closeAfterSave}>Close</button>
+              <button type="button" onClick={this.closeAfterSave}
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -800,7 +818,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
-  {/* Mailbox modal */}  
+          {/* Mailbox modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.openMailModal}
@@ -816,17 +834,17 @@ class Map extends React.Component {
             }}>
               <p>The purpose of this game is to help Jack get a full stack developer position at Google.</p>
               <p>
-              To do this, Jack has to go to the each of the three trainers (Steven, Will, Guillermo), and he must answer trivia questions. 
-              Jack will gain a coin for each trivia question he answers correctly.
-              When Jack gains 5 coins, he can go to the shop to upgrade his look (which is how he levels up).
+                To do this, Jack has to go to the each of the three trainers (Steven, Will, Guillermo), and he must answer trivia questions.
+                Jack will gain a coin for each trivia question he answers correctly.
+                When Jack gains 5 coins, he can go to the shop to upgrade his look (which is how he levels up).
               Once Jack has reached level 3, he can go to the interviewer at Google (Alex) and try to land that awesome job at Google!</p>
-              </div>
+            </div>
             <form>
-              <button  type="button" onClick={this.closeOpenMail}>Got it</button>
+              <button type="button" onClick={this.closeOpenMail}>Got it</button>
             </form>
           </Modal>
 
-  {/* TA in the woods modal */}
+          {/* TA in the woods modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.taOneModal}
@@ -834,15 +852,15 @@ class Map extends React.Component {
             className="ModalTaOne"
             overlayClassName="Overlay"
             contentLabel="Modal"
-         
+
           >
-            <TriviaOne increaseCoins={this.increaseCoins}/>
+            <TriviaOne increaseCoins={this.increaseCoins} />
             <br /><br />
             <button type="button" onClick={this.closeTaOne}>Close</button>
 
           </Modal>
 
-  {/* TA at lemonade stand modal */}
+          {/* TA at lemonade stand modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.taTwoModal}
@@ -851,13 +869,13 @@ class Map extends React.Component {
             overlayClassName="Overlay"
             contentLabel="Modal"
           >
-            <TriviaTwo increaseCoins={this.increaseCoins}/>
+            <TriviaTwo increaseCoins={this.increaseCoins} />
             <br /><br />
             <button type="button" onClick={this.closeTaTwo}>Close</button>
 
           </Modal>
 
-  {/* TA at far right modal */}
+          {/* TA at far right modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.taThreeModal}
@@ -866,13 +884,13 @@ class Map extends React.Component {
             overlayClassName="Overlay"
             contentLabel="Modal"
           >
-            <TriviaThree increaseCoins={this.increaseCoins}/>
+            <TriviaThree increaseCoins={this.increaseCoins} />
             <br /><br />
             <button type="button" onClick={this.closeTaThree}>Close</button>
 
           </Modal>
 
-  {/* First Tree after home modal */}
+          {/* First Tree after home modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.InformationOneModal}
@@ -893,7 +911,7 @@ class Map extends React.Component {
             }}>
             </div>
             <form>
-              <button type="button" onClick={this.closeInformationOne} 
+              <button type="button" onClick={this.closeInformationOne}
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -903,7 +921,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
-  {/* Large courtyard modal */}
+          {/* Large courtyard modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.InformationTwoModal}
@@ -924,7 +942,7 @@ class Map extends React.Component {
             }}>
             </div>
             <form>
-              <button type="button" onClick={this.closeInformationTwo} 
+              <button type="button" onClick={this.closeInformationTwo}
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -934,7 +952,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
-  {/* Ocean modal */}
+          {/* Ocean modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.InformationThreeModal}
@@ -955,7 +973,7 @@ class Map extends React.Component {
             }}>
             </div>
             <form>
-              <button type="button" onClick={this.closeInformationThree} 
+              <button type="button" onClick={this.closeInformationThree}
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -965,7 +983,7 @@ class Map extends React.Component {
             </form>
           </Modal>
 
-  {/* Final path modal */}
+          {/* Final path modal */}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.InformationFiveModal}
@@ -986,7 +1004,7 @@ class Map extends React.Component {
             }}>
             </div>
             <form>
-              <button type="button" onClick={this.closeInformationFive} 
+              <button type="button" onClick={this.closeInformationFive}
                 style={{
                   position: "absolute",
                   top: "0px",
@@ -996,43 +1014,43 @@ class Map extends React.Component {
             </form>
           </Modal>
 
-  {/* Upgrade Jack modal */}
+          {/* Upgrade Jack modal */}
           <Modal
-             ariaHideApp={false}
-             isOpen={this.state.modalJackisOpen}
-             onRequestClose={this.closeModalJack}
-             className="modalUpgrade"
-             overlayClassName="Overlaytest"
-             contentLabel="modalUpgrade"
+            ariaHideApp={false}
+            isOpen={this.state.modalJackisOpen}
+            onRequestClose={this.closeModalJack}
+            className="modalUpgrade"
+            overlayClassName="Overlaytest"
+            contentLabel="modalUpgrade"
           >
             <div>
-              <p style={{fontSize: "30px"}}>{this.state.jackUpgradePossible}</p>
-              </div>
+              <p style={{ fontSize: "30px" }}>{this.state.jackUpgradePossible}</p>
+            </div>
             <form>
-              {this.props.level !== 3 && <button  type="button" onClick={this.modalJack}>Upgrade Jack</button>}
-              <button  type="button" onClick={this.closeModalJack}>Exit</button>
+              {this.props.level !== 3 && <button type="button" onClick={this.modalJack}>Upgrade Jack</button>}
+              <button type="button" onClick={this.closeModalJack}>Exit</button>
             </form>
           </Modal>
 
-  {/* Alex final interview not ready*/}
+          {/* Alex final interview not ready*/}
           <Modal
-              ariaHideApp={false}
-              isOpen={this.state.modalFinalNotReady}
-              onRequestClose={this.closeModalFinal}
-              className="Modal"
-              overlayClassName="OverlayFinal"
-              contentLabel="Modal"
+            ariaHideApp={false}
+            isOpen={this.state.modalFinalNotReady}
+            onRequestClose={this.closeModalFinal}
+            className="Modal"
+            overlayClassName="OverlayFinal"
+            contentLabel="Modal"
           >
 
             <h2 ref={subtitle => this.subtitle = subtitle}>Google Interview</h2>
             <div>
               <p>Sorry Jack, you are not ready for this interview. Only those who are at level 3 can interview at Google.</p>
-              </div>
+            </div>
             <form>
-              <button  type="button" onClick={this.closeModalFinal}>Got It</button>
+              <button type="button" onClick={this.closeModalFinal}>Got It</button>
             </form>
           </Modal>
-  {/* Alex final interview modal*/}
+          {/* Alex final interview modal*/}
           <Modal
             ariaHideApp={false}
             isOpen={this.state.modalFinalisOpen}
@@ -1046,7 +1064,7 @@ class Map extends React.Component {
 
           </Modal>
 
-  {/* Coin and Level components */}
+          {/* Coin and Level components */}
           <div style={{
             position: "absolute",
             width: "326px",
@@ -1056,28 +1074,28 @@ class Map extends React.Component {
             backgroundColor: "#999999",
             border: "solid 4px #ffffff",
           }}>
-              <Coins coin={this.props.coin}/>
-              <Level level={this.props.level}/>
+            <Coins coin={this.props.coin} />
+            <Level level={this.props.level} />
           </div>
 
-  {/* Map 2nd layer */}
-          <div 
+          {/* Map 2nd layer */}
+          <div
             style={{
-                position: 'absolute',
-                top: '-5px',
-                left: '-554px',
-                width: "100%",
-                height: "100%",
-                zIndex: 2,
-                backgroundImage: `url('${bush}')`,
-         
-           
+              position: 'absolute',
+              top: '-5px',
+              left: '-554px',
+              width: "100%",
+              height: "100%",
+              zIndex: 2,
+              backgroundImage: `url('${bush}')`,
+
+
             }}>
           </div>
 
-  {/* Layout tiles for map */}
-          {this.props.tiles.map( row => <MapRow tiles={row} /> )}
-          
+          {/* Layout tiles for map */}
+          {this.props.tiles.map(row => <MapRow tiles={row} />)}
+
         </div>
       </>
     )
