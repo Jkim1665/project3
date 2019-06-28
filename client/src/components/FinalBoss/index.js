@@ -80,7 +80,7 @@ class FinalBoss extends React.Component {
                 intro: 2,
             });
         } else {
-            if(this.answersCorrect >= 8) {
+            if(this.state.answersCorrect >= 8) {
                 this.setState({
                     question: "You passed the interview! Welcome to Google!",
                     questionNum: "Congratulations!",
