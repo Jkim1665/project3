@@ -23,6 +23,9 @@ class FinalBoss extends React.Component {
         correctAnswer: "",
         questionIndex: 0,
         questionNum: "",
+        answersCorrect: 0,
+        finalScore: "",
+        resultButton: "",
     }
 
     componentDidMount() {
@@ -32,31 +35,31 @@ class FinalBoss extends React.Component {
 
     //function to increase coin count
     increaseCoins = () => {
-   
-        const newCoin = this.props.coin + 1;
 
-        store.dispatch({
-            type: 'ADD_COIN',
-            payload: {
-                coin: newCoin,
-            }
-        })
+        console.log(this.state.answersCorrect + " first")
+        const correctAns = this.state.answersCorrect + 1;
 
+        console.log(correctAns + " correct answers")
+        this.setState({
+            answersCorrect: correctAns,
+        });
+        console.log(this.state.answersCorrect + " second")
         this.questionsOne();
+       
     }
 
     answeredQuestion = (answer) => {
-       
-        console.log(answer.target.value);
+
         if (answer.target.value === this.state.correctAnswer) {
             this.increaseCoins();
         } else {
             this.questionsOne();
         }
-     
+
     }
 
-    //set state to next question
+
+    //set state to next question or show end results
     questionsOne = () => {
 
         const questIndex = this.state.questionIndex + 1;
@@ -75,20 +78,57 @@ class FinalBoss extends React.Component {
                 questionIndex: questIndex,
             });
         } else {
-            this.setState({
-                question: "You have completed this set of questions.",
-                questionNum: "",
-                answerOne: "",
-                answerTwo: "",
-                answerThree: "",
-                answerFour: "",
-                correctAnswer: "",
-                questionIndex: 0,
-            })
+            if(this.answersCorrect >= 8) {
+                this.setState({
+                    question: "You passed the interview! Welcome to Google!",
+                    questionNum: "Congratulations!",
+                    answerOne: "",
+                    answerTwo: "",
+                    answerThree: "",
+                    answerFour: "",
+                    correctAnswer: "",
+                    questionIndex: 0,
+                    finalScore: "Your score: " + this.state.answersCorrect + ".",
+                    resultButton: "Restart Game"
+                });
+            } else {
+                this.setState({
+                    question: "You were not able to pass the interview this time. You will have to study some more to reach level 3 again.",
+                    questionNum: "Sorry Jack...",
+                    answerOne: "",
+                    answerTwo: "",
+                    answerThree: "",
+                    answerFour: "",
+                    correctAnswer: "",
+                    questionIndex: 0,
+                    finalScore: "Your score: " + this.state.answersCorrect + ".",
+                    resultButton: "Close",
+                });
+                store.dispatch({
+                    type:"UPGRADE_PLAYER",
+                    payload: {
+                        level: 0,
+                    }
+                });
+            }
+
         }
     }
-  
 
+
+    endGame = () => {
+        if(this.answersCorrect >= 8) {
+            window.location.reload();
+        } else {
+            store.dispatch({
+                type: 'MODAL_OPEN',
+                payload: {
+                  isAnyModalOpen: false,
+                  modalFinalisOpen: false,
+                }
+              });
+        }
+    }
 
 
     render() {
@@ -98,12 +138,14 @@ class FinalBoss extends React.Component {
                     <h2>{this.state.questionNum}</h2>
                     <div>
                         <p>{this.state.question}</p>
+                        <p>{this.state.finalScore}</p>
                     </div>
                     <form>
                         {this.state.answerOne && <button type="button" className="buttonQ" onClick={this.answeredQuestion} value={this.state.answerOne}>{this.state.answerOne}</button>}
                         {this.state.answerTwo && <button type="button" className="buttonQ" onClick={this.answeredQuestion} value={this.state.answerTwo}>{this.state.answerTwo}</button>}
                         {this.state.answerThree && <button type="button" className="buttonQ" onClick={this.answeredQuestion} value={this.state.answerThree}>{this.state.answerThree}</button>}
                         {this.state.answerFour && <button type="button" className="buttonQ" onClick={this.answeredQuestion} value={this.state.answerFour}>{this.state.answerFour}</button>}
+                        {this.state.resultButton && <button type="button" className="button" onClick={this.endGame}>{this.state.resultButton}</button>}
                     </form>
             </div>
             </>
@@ -117,7 +159,8 @@ class FinalBoss extends React.Component {
 const mapStateToProps = state => {
     return {
       coin: state.coin.coin,
+      modalFinalisOpen: state.modal.modalFinalisOpen,
     }
   }
-  
+
   export default connect(mapStateToProps)(FinalBoss);

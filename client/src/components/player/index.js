@@ -22,7 +22,11 @@ class Player extends React.Component {
   }
 
   changeSprite = (e) => {
-    if(store.getState().level.level === 1) {
+    if(store.getState().level.level === 0) {
+      this.setState({
+        sprite: Sprite1,
+      });
+    } else if(store.getState().level.level === 1) {
       this.setState({
         sprite: Sprite2,
       });

@@ -18,7 +18,7 @@ import bush from "./bushextra.png";
 import whiteMark from "./whiteMark.png";
 import deckModal from "./deckModal.png";
 import oceanModal from "./oceanModal.png";
-import Sound from "react-sound";
+// import Sound from "react-sound";
 import API from "../../utils/API";
 
 //this function gets the tile file to put into the background of that tile
@@ -86,6 +86,9 @@ class Map extends React.Component {
     showFour: true,
     showFive: true,
     bedModal: false,
+    mailWelcome: "Welcome to JACK!",
+    mailMessageOne: "The purpose of this game is to help Jack get a full stack developer position at Google.",
+    mailMessageTwo: "To do this, Jack has to go to the each of the three trainers (Steven, Will, Guillermo), and he must answer trivia questions. Jack will gain a coin for each trivia question he answers correctly. When Jack gains 5 coins, he can go to the shop to upgrade his look (which is how he levels up). Once Jack has reached level 3, he can go to the interviewer at Google (Jedi Master Alex) and try to land that awesome job at Google!",
   }
 
 
@@ -211,6 +214,7 @@ class Map extends React.Component {
       //Information modal Two
       if ((x === 512 && y === 128 && direction === "NORTH") || (x === 576 && y === 128 && direction === "NORTH")) {
         this.informationTwo();
+        this.toggleExclamation();
       }
       //information modal Three (ocean modal)
       if (x === 1152 && y === 64 && direction === "NORTH") {
@@ -320,13 +324,28 @@ class Map extends React.Component {
 
   /****** mailbox modal for directions to the game ********/
   openMail = () => {
-    this.setState({ openMailModal: true });
-    store.dispatch({
-      type: 'MODAL_OPEN',
-      payload: {
-        isAnyModalOpen: true,
-      }
-    });
+    if(store.getState().level.level >= 1) {
+      this.setState({ 
+        openMailModal: true,
+        mailWelcome: "Welcome back!",
+        mailMessageOne: "Remember, your goal is to get that interview at Google!",
+        mailMessageTwo: "If you haven't reached level 3 yet, make sure to visit Will, Guillermo, or Steven. Remember you need 5 coins to get to the next level!",
+       });
+      store.dispatch({
+        type: 'MODAL_OPEN',
+        payload: {
+          isAnyModalOpen: true,
+        }
+      });
+    } else {
+      this.setState({ openMailModal: true });
+      store.dispatch({
+        type: 'MODAL_OPEN',
+        payload: {
+          isAnyModalOpen: true,
+        }
+      });
+    }
   }
   closeOpenMail = () => {
     this.setState({ openMailModal: false });
@@ -567,13 +586,11 @@ class Map extends React.Component {
   modalFinal = () => {
 
     if (this.props.level >= 3) {
-      this.setState({
-        modalFinalisOpen: true,
-      });
       store.dispatch({
         type: 'MODAL_OPEN',
         payload: {
           isAnyModalOpen: true,
+          modalFinalisOpen: true,
         }
       });
     } else {
@@ -591,7 +608,6 @@ class Map extends React.Component {
 
   closeModalFinal = () => {
     this.setState({
-      modalFinalisOpen: false,
       modalFinalNotReady: false,
     });
     store.dispatch({
@@ -768,7 +784,7 @@ class Map extends React.Component {
               marginTop: "200px",
               textAlign: "center",
             }}>
-              <p>Hi, {this.state.name}.</p>
+              <p>Welcome.</p>
               <p>Would you like to save your progress?</p>
             </div>
             <form>
@@ -815,21 +831,17 @@ class Map extends React.Component {
             ariaHideApp={false}
             isOpen={this.state.openMailModal}
             onRequestClose={this.closeOpenMail}
-            className="Modal"
+            className="ModalMail"
             overlayClassName="Overlay"
-            contentLabel="Modal"
+            contentLabel="ModalMail"
           >
 
-            <h2 ref={subtitle => this.subtitle = subtitle}>Welcome to JACK!</h2>
+            <h2>{this.state.mailWelcome}</h2>
             <div style={{
               padding: "0px 150px"
             }}>
-              <p>The purpose of this game is to help Jack get a full stack developer position at Google.</p>
-              <p>
-                To do this, Jack has to go to the each of the three trainers (Steven, Will, Guillermo), and he must answer trivia questions.
-                Jack will gain a coin for each trivia question he answers correctly.
-                When Jack gains 5 coins, he can go to the shop to upgrade his look (which is how he levels up).
-              Once Jack has reached level 3, he can go to the interviewer at Google (Alex) and try to land that awesome job at Google!</p>
+              <p>{this.state.mailMessageOne}</p>
+              <p>{this.state.mailMessageTwo}</p>
             </div>
             <form>
               <button type="button" onClick={this.closeOpenMail}>Got it</button>
@@ -1034,7 +1046,7 @@ class Map extends React.Component {
             contentLabel="ModalFinal"
           >
 
-            <h2 ref={subtitle => this.subtitle = subtitle}>Google Interview</h2>
+            <h2>Google Interview</h2>
             <div>
               <p>Sorry Jack, you are not ready for this interview. Only those who are at level 3 can interview at Google.</p>
             </div>
@@ -1045,15 +1057,14 @@ class Map extends React.Component {
           {/* Alex final interview modal*/}
           <Modal
             ariaHideApp={false}
-            isOpen={this.state.modalFinalisOpen}
+            isOpen={this.props.modalFinalisOpen}
             onRequestClose={this.closeModalFinal}
             className="ModalFinal"
             overlayClassName="OverlayFinal"
             contentLabel="ModalFinal"
           >
             <FinalBoss />
-            <button type="button" onClick={this.closeModalFinal}>Close</button>
-
+        
           </Modal>
 
           {/* Coin and Level components */}
@@ -1108,6 +1119,7 @@ const mapStateToProps = state => {
     bgImage: state.map.bgImage,
     name: state.map.name,
     isAnyModalOpen: state.modal.isAnyModalOpen,
+    modalFinalisOpen: state.modal.modalFinalisOpen,
   }
 }
 
