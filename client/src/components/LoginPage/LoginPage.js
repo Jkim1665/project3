@@ -15,14 +15,6 @@ class LoginPage extends React.Component {
     event.preventDefault();
     let state = this.state;
 
-    // console.log(this.state.name + " " + this.state.email + " " + this.state.password);
-    // this.props.onSubmit(this.state.name, this.state.email, this.state.password);
-
-    // FOR TESTING ONLY
-    // API.findAllUsers()
-    //   .then(res => console.log(res.data))
-    //   .catch(err => console.log(err));
-
     // authenicating WITH BCRYPT
     API.getSingleUser({ email: this.state.email.toLowerCase() })
       .then(function (res) {
@@ -31,8 +23,7 @@ class LoginPage extends React.Component {
           console.log(state);
           API.createUser(state)
             .then(function (res) {
-              // changes redux store state
-              // TODO: add name and email to store
+ 
               console.log(res.data);
 
               // login information
@@ -103,62 +94,8 @@ class LoginPage extends React.Component {
         }
       })
 
-
-    /*
-    // authenicating - THIS WORKS FOR PLAIN TEXT DATA STORAGE
-    API.getSingleUser({ email: this.state.email.toLowerCase() })
-      .then(function (res) {
-        // if user does not exist, create the user
-        if (res.data === null) {
-          API.createUser(state)
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err));
-        }
-        // if user does exist, check if password matches
-        else {
-          if (res.data.password === state.password) {
-            // alert("user authenticated");
-            store.dispatch({
-              type: 'ISLOGGEDIN',
-              payload: {
-                isLoggedIn: true
-              }
-            })
-          }
-          else {
-            alert("user authentication failed");
-          }
-        }
-      })
-      */
   }
 
-  // getSingleUser = (event) => {
-  //   event.preventDefault();
-  //   this.props.onSubmit(this.state.name, this.state.email, this.state.password)
-
-  //   API.getSingleUser({ email: this.state.email.toLowerCase() })
-  //     .then(res => console.log(res.data))
-  //     .catch(err => console.log(err));
-  // }
-
-  // updateSingleUser = (event) => {
-  //   event.preventDefault();
-  //   this.props.onSubmit(this.state.name, this.state.email, this.state.password)
-
-  //   API.updateSingleUser(this.state)
-  //     .then(res => console.log(res.data))
-  //     .catch(err => console.log(err));
-  // }
-
-  // createUser = (event) => {
-  //   event.preventDefault();
-  //   this.props.onSubmit(this.state.name, this.state.email, this.state.password)
-
-  //   API.createUser(this.state)
-  //     .then(res => console.log(res.data))
-  //     .catch(err => console.log(err));
-  // }
 
   render() {
 
@@ -166,7 +103,6 @@ class LoginPage extends React.Component {
       <div className="content" >
 
         <form className="loginPageForm" onSubmit={this.onFormSubmit} >
-
           <div>
             <input type="text" placeholder="Name" value={this.state.name.toUpperCase()} onChange={(e) => this.setState({ name: e.target.value.toLowerCase() })} />
           </div>
@@ -179,9 +115,6 @@ class LoginPage extends React.Component {
             <input type="password" placeholder="Password" value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} />
           </div>
           <button type="submit">Log In</button>
-          {/* <button className="uk-button uk-button-secondary uk-button-large" onClick={this.getSingleUser}>getSingleUser</button>
-          <button className="uk-button uk-button-secondary uk-button-large" onClick={this.updateSingleUser}>updateSingleUser</button>
-          <button className="uk-button uk-button-secondary uk-button-large" onClick={this.createUser}>createUser</button> */}
         </form>
       </div>
     )

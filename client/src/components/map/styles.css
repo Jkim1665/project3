@@ -67,6 +67,24 @@
   line-height: 1.6;
 }
 
+.ModalMail {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  padding: 10px 20px;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  color: #2c2c2c;
+  font-size: 25px;
+  z-index: 3;
+  background-image: url(./paper.jpg);
+  background-position: center;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.6;
+}
+
 .ModalFinal {
   position: absolute;
   top: 40px;

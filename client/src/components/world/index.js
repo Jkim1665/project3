@@ -4,7 +4,7 @@ import Player from '../player';
 import bgImage1 from './mapGrid.png';
 // import bgImage2 from "./testMap.png";
 import { tiles } from '../../data/maps/1';
-import { tiles2 } from '../../data/maps/2';
+// import { tiles2 } from '../../data/maps/2';
 import store from '../../config/store';
 
 
@@ -23,7 +23,6 @@ class World extends React.Component {
       tiles: tiles,
       bgImage: bgImage1,
       name: "Jack",
-      show: true,
     }});
   }
 

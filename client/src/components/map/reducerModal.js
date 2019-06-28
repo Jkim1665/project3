@@ -1,5 +1,6 @@
 const initialState = {
     isAnyModalOpen: false,
+    modalFinalisOpen: false,
   }
   
   const modalReducer = (state=initialState, action) => {

@@ -7,9 +7,6 @@ import mainMusic from "./gameMusic.mp3"
 
 class App extends Component {
 
-  // func to check db/authentication
-  // changes this.state.isLoggedIn
-
   onFormSubmit(name, email, password) {
     console.log(name, email, password)
   }
@@ -21,9 +18,8 @@ class App extends Component {
               url={mainMusic}
               playStatus={Sound.status.PLAYING}
               playFromPosition={0}
-              onLoading={this.handleSongLoading}
-              onPlaying={this.handleSongPlaying}
-              onFinishedPlaying={this.handleSongFinishedPlaying}
+              volume={10}
+              loop={true}
             />
         {this.props.isLoggedIn ? <World /> : <LoginPage />}
         
