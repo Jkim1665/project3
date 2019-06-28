@@ -165,10 +165,7 @@ class LoginPage extends React.Component {
     return (
       <div className="content" >
 
-        Welcome to the dungeon
-
-      <hr />
-        <form onSubmit={this.onFormSubmit} >
+        <form className="loginPageForm" onSubmit={this.onFormSubmit} >
 
           <div>
             <input type="text" placeholder="Name" value={this.state.name.toUpperCase()} onChange={(e) => this.setState({ name: e.target.value.toLowerCase() })} />
