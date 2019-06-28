@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b4f950cc.chunk.css",
+    "main.js": "/static/js/main.91fab8e1.chunk.js",
+    "main.js.map": "/static/js/main.91fab8e1.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/js/2.ec802bdc.chunk.js": "/static/js/2.ec802bdc.chunk.js",
+    "static/js/2.ec802bdc.chunk.js.map": "/static/js/2.ec802bdc.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.00c119fe1489bb182565c323434fac40.js": "/precache-manifest.00c119fe1489bb182565c323434fac40.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.b4f950cc.chunk.css.map": "/static/css/main.b4f950cc.chunk.css.map",
+    "static/media/JackHair.png": "/static/media/JackHair.5d948508.png",
+    "static/media/JackSuit.png": "/static/media/JackSuit.51cb131e.png",
+    "static/media/billboard.png": "/static/media/billboard.a75045c2.png",
+    "static/media/bushextra.png": "/static/media/bushextra.4fdd4b5a.png",
+    "static/media/deckModal.png": "/static/media/deckModal.84798459.png",
+    "static/media/gameMusic.mp3": "/static/media/gameMusic.c79c8c6f.mp3",
+    "static/media/LoginPage.css": "/static/media/image.5af58d1e.png",
+    "static/media/jackBriefcase.png": "/static/media/jackBriefcase.711e8354.png",
+    "static/media/jackOriginal.png": "/static/media/jackOriginal.aef952b8.png",
+    "static/media/styles.css": "/static/media/saveModal.14fcaf6d.png",
+    "static/media/mapGrid.png": "/static/media/mapGrid.48b88755.png",
+    "static/media/oceanModal.png": "/static/media/oceanModal.36b9621c.png",
+    "static/media/treeModal.png": "/static/media/treeModal.d3428fe2.png"
+  }
+}
