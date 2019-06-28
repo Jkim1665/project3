@@ -92,11 +92,11 @@
   right: 40px;
   bottom: 40px;
   padding: 20px 80px;
-  background-color: rgb(65, 65, 65);
+  background-color: rgb(255, 255, 255);
   background-image: url(../map/loginOceanBackground.png);
   background-position-x: center;
   text-align: center;
-  color: #ffffff;
+  color: #000000;
   font-size: 25px;
   z-index: 3;
   font-family: 'Press Start 2P', cursive;
