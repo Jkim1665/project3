@@ -1,6 +1,7 @@
 const initialState = {
   isLoggedIn: false,
-  email: "",
+  name: "",
+  email: ""
 }
 
 const loginPageReducer = (state=initialState, action) => {
