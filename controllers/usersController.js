@@ -19,7 +19,7 @@ module.exports = {
 
   updateUser: function (req, res) {
     db.User
-      .findOneAndUpdate({ email: req.body.email }, req.body, { new: true })
+      .findOneAndUpdate({ email: req.body.email }, {coins: req.body.coins, level: req.body.level}, { new: true })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -37,7 +37,10 @@ module.exports = {
       .then(function(dbModel) {
         dbModel.verifyPassword(req.body.password)
           .then(function(valid) {
-            res.json(valid);
+            res.json({
+              isValid: valid,
+              dbModel: dbModel
+            });
           })
       })
       .catch(err => res.status(422).json(err));

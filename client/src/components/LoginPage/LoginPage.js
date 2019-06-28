@@ -33,10 +33,31 @@ class LoginPage extends React.Component {
             .then(function (res) {
               // changes redux store state
               // TODO: add name and email to store
+              console.log(res.data);
+
+              // login information
               store.dispatch({
                 type: 'ISLOGGEDIN',
                 payload: {
-                  isLoggedIn: true
+                  isLoggedIn: true,
+                  name: res.data.name,
+                  email: res.data.email
+                }
+              })
+
+              // coin
+              store.dispatch({
+                type: 'ADD_COIN',
+                payload: {
+                  coin: res.data.coins
+                }
+              })
+
+              // level
+              store.dispatch({
+                type: 'UPGRADE_PLAYER',
+                payload: {
+                  level: res.data.level
                 }
               })
             })
@@ -46,12 +67,32 @@ class LoginPage extends React.Component {
         else {
 
           API.authenticateUser(state)
-            .then(function(isValid) {
-              if(isValid.data) {
+            .then(function (r) {
+              console.log(r);
+              if (r.data.isValid) {
+                // login info
                 store.dispatch({
                   type: 'ISLOGGEDIN',
                   payload: {
-                    isLoggedIn: true
+                    isLoggedIn: true,
+                    name: r.data.dbModel.name,
+                    email: r.data.dbModel.email,
+                  }
+                })
+
+                // coin
+                store.dispatch({
+                  type: 'ADD_COIN',
+                  payload: {
+                    coin: r.data.dbModel.coins
+                  }
+                })
+
+                // level
+                store.dispatch({
+                  type: 'UPGRADE_PLAYER',
+                  payload: {
+                    level: r.data.dbModel.level
                   }
                 })
               }
