@@ -230,6 +230,10 @@ class Map extends React.Component {
         this.informationFive();
         this.toggleExclamation();
       }
+      //Dog Modal
+      // if ((x === 832 && y === 128 && direction === "EAST") || (x === 896 && y === 192 && direction === "NORTH")) {
+      //   this.dog();
+      // }
       //upgrade Jack
       if (x === 832 && y === 64 && direction === "NORTH") {
         if (this.props.level < 3) {
@@ -538,7 +542,7 @@ class Map extends React.Component {
       }
     } else {
       this.setState({
-        jackUpgradePossible: "You've reach the maximum level! You are ready to do whatever you want!"
+        jackUpgradePossible: "You've reach the maximum level! Go get your dream job!"
       });
       store.dispatch({
         type: 'MODAL_OPEN',
@@ -664,7 +668,7 @@ class Map extends React.Component {
               style={{
                 position: 'absolute',
                 top: '180px',
-                left: '260px',
+                left: '250px',
                 width: "64px",
                 height: "64px",
                 zIndex: 2,
@@ -719,16 +723,16 @@ class Map extends React.Component {
             ariaHideApp={false}
             isOpen={this.state.openNowModal}
             onRequestClose={this.closeOpenNow}
-            className="Modaltest"
+            className="ModalOpening"
             overlayClassName="Overlaytest"
-            contentLabel="Modaltest"
+            contentLabel="ModalOpening"
           >
             <div style={{
-              marginTop: "20px",
+              margin: "40px 80px",
               textAlign: "center",
             }}>
               <p>Hi, {store.getState().isLoggedIn.name}.</p>
-              <p>Remember to check your mail first!</p>
+              <p>Make sure to check the mail for information about the game!</p>
             </div>
             <form>
               <button type="button" onClick={this.closeOpenNow}
@@ -745,9 +749,9 @@ class Map extends React.Component {
             ariaHideApp={false}
             isOpen={this.state.bedModal}
             onRequestClose={this.closeBed}
-            className="Modaltest"
+            className="ModalOpening"
             overlayClassName="Overlaytest"
-            contentLabel="Modaltest"
+            contentLabel="ModalOpening"
           >
             <div style={{
               marginTop: "20px",
@@ -942,6 +946,8 @@ class Map extends React.Component {
               width: '100%',
               height: '100%',
               backgroundRepeat: "no-repeat",
+              backgroundPositionX: "center",
+              backgroundPositionY: "bottom",
               backgroundSize: "cover"
             }}>
             </div>
@@ -1024,7 +1030,7 @@ class Map extends React.Component {
             isOpen={this.state.modalJackisOpen}
             onRequestClose={this.closeModalJack}
             className="modalUpgrade"
-            overlayClassName="Overlaytest"
+            overlayClassName="Overlay"
             contentLabel="modalUpgrade"
           >
             <div>
