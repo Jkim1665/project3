@@ -1,26 +1,13 @@
 # J.A.C.K
 ## A unique interactive learning experience
 
-
-A quiz based RPG, will you get the job?
-
-Visit our APP
-
-## Deployment (Heroku LINK)
+A quiz-based RPG, will you get the job?
 
 
-```
-Our premise
-```
+## Deployment
 
-Learning doesn't have to be boring, with J.A.C.K the user can explore an educational landscape while "leveling" up not only their character , but their knowledge.
+Visit our app: https://obscure-shelf-71693.herokuapp.com/
 
+#### Our premise
 
-
-```
-
-```
-
-
-## Start the app Locally with NPM START / NPM INSTALL
-
+Learning doesn't have to be boring. With J.A.C.K, the user can explore an educational landscape while "leveling" up not only their character, but their knowledge.
