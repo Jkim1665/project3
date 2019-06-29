@@ -7,10 +7,6 @@ import mainMusic from "./gameMusic.mp3"
 
 class App extends Component {
 
-  onFormSubmit(name, email, password) {
-    console.log(name, email, password)
-  }
-
   render() {
     return (
       <div>
@@ -18,6 +14,7 @@ class App extends Component {
               url={mainMusic}
               playStatus={Sound.status.PLAYING}
               playFromPosition={0}
+              autoLoad={true}
               volume={10}
               loop={true}
             />
