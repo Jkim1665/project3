@@ -88,7 +88,7 @@ class Map extends React.Component {
     bedModal: false,
     mailWelcome: "Welcome to JACK!",
     mailMessageOne: "The purpose of this game is to help Jack get a full stack developer position at Google.",
-    mailMessageTwo: "To do this, Jack has to go to the each of the three trainers (Steven, Will, Guillermo), and he must answer trivia questions. Jack will gain a coin for each trivia question he answers correctly. When Jack gains 5 coins, he can go to the shop to upgrade his look (which is how he levels up). Once Jack has reached level 3, he can go to the interviewer at Google (Jedi Master Alex) and try to land that awesome job at Google!",
+    mailMessageTwo: "To do this, Jack has to go to each of the three trainers (Steven, Will, Guillermo), and he must answer trivia questions. Jack will gain a coin for each trivia question he answers correctly. When Jack gains 5 coins, he can go to the shop to upgrade his look (which is how he levels up). Once Jack has reached level 3, he can go to the interviewer at Google (Jedi Master Alex) and try to land that awesome job at Google!",
   }
 
 

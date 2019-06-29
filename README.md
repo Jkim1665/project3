@@ -13,7 +13,7 @@ Visit our APP
 Our premise
 ```
 
-Learning doesn't have to be boring, with J.A.C.K the user can explore an educational landscape while "leveling" up not only thier character , but their knowledge.
+Learning doesn't have to be boring, with J.A.C.K the user can explore an educational landscape while "leveling" up not only their character , but their knowledge.
 
 
 
