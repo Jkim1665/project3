@@ -59,7 +59,6 @@ class LoginPage extends React.Component {
 
           API.authenticateUser(state)
             .then(function (r) {
-              console.log(r);
               if (r.data.isValid) {
                 // login info
                 store.dispatch({
