@@ -9,8 +9,11 @@ router.route("/")
 // Matches with "/api/users/existingUser"
 router
   .route("/existingUser")
-  .post(usersController.findByEmail)
   .put(usersController.updateUser)
+
+router
+  .route("/existingUser/:email")
+  .get(usersController.findByEmail)
 
 // Matches with "/api/users/newUser"
 router

@@ -8,8 +8,8 @@ export default {
   },
 
   // Gets a single user from db
-  getSingleUser: function (userData) {
-    return axios.post("/api/users/existingUser", userData);
+  getSingleUser: function(userData) {
+    return axios.get("/api/users/existingUser/" + userData);
   },
   
   // Updates a single user from db
