@@ -16,15 +16,13 @@ class LoginPage extends React.Component {
     let state = this.state;
 
     // authenicating WITH BCRYPT
-    API.getSingleUser({ email: this.state.email.toLowerCase() })
+    //API.getSingleUser({ email: this.state.email.toLowerCase() })
+    API.getSingleUser(this.state.email.toLowerCase())
       .then(function (res) {
         // if user does not exist, create the user
         if (res.data === null) {
-          console.log(state);
           API.createUser(state)
             .then(function (res) {
- 
-              console.log(res.data);
 
               // login information
               store.dispatch({
